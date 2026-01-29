@@ -28,9 +28,14 @@ Numbers can be used to do arithmetic.
 ```
 
 (@) You try, multiple two numbers. 
-
+```{r}
+6 * 7
+```
 
 (@) Can you multiply two numbers and then divide by the result? 
+```{r}
+6 * 7 / 6
+```
 
 The next type of value is a **string**. Strings are lines of text. Sometimes these are referred to as character vectors. To create a string, you add text between two quotation marks. For example: 
 ```{r}
@@ -39,7 +44,7 @@ The next type of value is a **string**. Strings are lines of text. Sometimes the
 
 (@) Try to create your own string.
 ```{r}
-
+"I love to run"
 ```
 
 You can't add strings using `+` like you can numbers. But there is a function called `paste()` which concatenates character vectors into one. This function is _very_ useful and one you'll use a lot in a variety of circumstances. Here's what that looks like: 
@@ -50,12 +55,12 @@ paste("Hello", "Clemson Graduate Students")
 
 (@) Try it, add two strings together like the above example. 
 ```{r}
-
+paste("I love to run", "long distances")
 ```
 
 (@) Can you explain what happened in 2-3 sentences? 
 
-> 
+> Using the paste function, I was able to concatenate (join) two different strings of text into one string of text. This function combined two character vectors into one, single vector.
 
 The last type are **logical** values like `TRUE` and `FALSE`. (Note that these are all caps.)
 
@@ -95,16 +100,23 @@ Logical Operators allow you to combine or change the results of comparisons.
 ```
 (@) Explain, what does the code on each line above do? 
 
->
+>line 94 reads 5 is equal to 10; computer renders it FALSE
+line 95 reads 3 is less than 4; computer renders it TRUE
+line 96 reads 5 is not equal to 10; computer renders it TRUE
+line 97 reads 5 is not equal to 5; computer renders it FALSE
+line 98 reads 3 is equal to 4 or 3; computer renders it TRUE
+line 99 reads 3 is not equal to 4 and 3 is not equal to 5; Computer renders it TRUE
 
 (@) Create your own comparison. 
 ```{r}
-
+2 == 2 & 4 > 2
 ```
 
 (@) Can you write code that checks if a year is between 1970 AND 1980? 
 ```{r}
-
+year_to_check <- 1975
+is_in_range <- (year_to_check >= 1970) & (year_to_check <= 1980)
+print(is_in_range)
 ```
 
 ---
