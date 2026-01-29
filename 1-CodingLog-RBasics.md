@@ -1,15 +1,15 @@
 # Week [X] Learning Log
 
-**Student Name:** [Your name]  
-**Week of:** [Date range]  
-**Topic(s):** [e.g., "Data Structures and Loops"]
+**Student Name:** [Dori Impson]  
+**Week of:** [1/28-2/2]  
+**Topic(s):** ["R"]
 
 ---
 
 ## What I Worked On This Week
 
 **Assignment(s):**
-- [ ] Worksheet [#]
+- [ ] Worksheet [#1]
 - [ ] Other: [describe]
 
 ---
