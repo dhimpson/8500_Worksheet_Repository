@@ -285,14 +285,19 @@ We can ask R to pull up the documentation like this:
 
 (@) Now you try, find the documentation for the function  `signif()`.
 ```{r}
-
+?signif()
 ```
 
 In real life, you typically you wouldn't want to store this code in your script file. You probably don't need to pull up the documentation for the function every time you run that piece of code. But for the purposes of this worksheet we're adding it to our `.Rmd` document. 
 
 (@) Use the console to find the documentation for `floor()`? Try it and then tell me, what does that function do? 
 
->
+```{r}
+?floor()
+```
+Floor takes a numeric argument and returns a numeric vector with the largest integers not greater than the corresponding elements of x.
+
+
 
 ### Data Frames & Packages
 
