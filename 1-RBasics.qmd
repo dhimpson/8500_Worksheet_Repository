@@ -335,7 +335,7 @@ What is going on here? Each line within this function (x,y,z) creates a new colu
 
 (@) What is going on in row z? Can you explain the logic here?
 
->
+>Line z take the first column, x, multiplies its values by 2 and then adds the values of line y, from the second column, to get a new answer
 
 
 ## Loading Dataframes from Packages
@@ -357,7 +357,7 @@ Run `help(package="DigitalMethodsData")` in your console to pull up a list of da
 
 For demonstration purposes we'll use the `gayguides` data here. Pull up the help documentation for this dataset. What does the documentation tell you abou the scope of this dataset? 
 
->
+> It tells me the data is compiled from address books that span 1965 to 1985 and also the format of the data is available in one data frame with 14 variables and 60698 obeservations.
 
 To use a dataset included in this package we first need to load it. We can do so like this:
 
@@ -379,17 +379,18 @@ That gives us the first 6 rows of data. Its really useful if you just want to pe
 
 (@) The default is to print six rows of data. Can you modify the above code to print out the first 10 rows? 
 ```{r}
-
+head(gayguides, 10)
 ```
 
 (@) Can you find the last 6 rows of data? 
 ```{r}
+tail(gayguides)
 
 ```
 
 (@) Reflect on the previous two prompts. How did you figure these out? 
 
->
+> I googled them and then tried what I found. 
 
 The `str()` function is another very useful function for understanding a dataset. It compactly displays the internal structure of an R object. 
 ```{r}
@@ -408,7 +409,7 @@ gayguides$title[500]
 
 (@) Break this down. Whats going on here? What do each of the elements of this code mean? (gayguides, $, title, and [500]) 
 
->
+> Gayguides is the specific dataset that we are using, $ is going to access only a specific part of this dataset-in this case just the title which is following it, the 500 is lookin at the 500th item that is in the title row within the dataset. 
 
 (@) The Year variable contains the year (numeric) of each entry. Can you find the earliest year in this dataset? (Using code, don't cheat and use the documentation!)
 ```{r}
