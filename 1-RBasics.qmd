@@ -413,19 +413,22 @@ gayguides$title[500]
 
 (@) The Year variable contains the year (numeric) of each entry. Can you find the earliest year in this dataset? (Using code, don't cheat and use the documentation!)
 ```{r}
-
+earliest_year <- min(gayguides$Year, na.rm = TRUE)
+print(earliest_year)
 ```
-
+#the answer i got was 1965. this took a lot of googling and i think i did it the hard way.
 
 (@) How about the latest year? 
 ```{r}
-
+latest_year <- max(gayguides$Year, na.rm = TRUE)
+print(latest_year)
 ```
-
+#the latest year was 1985. i got this by modifying my previous earliest year attempt.
 
 (@) Add another dataset from `DigitalMethodsData`. How many observations are included in this dataset? Run through some of the examples from above to learn about the dataset.
 ```{r}
-
+data("CharlestonManumissions")
+head(CharlestonManumissions)
 ```
 
 (@) What did you learn about the dataset? What can you tell me about it? 
