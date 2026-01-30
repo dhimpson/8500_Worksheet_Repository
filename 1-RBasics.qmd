@@ -240,7 +240,7 @@ And we could then do calculations based on these values:
 my.numbers * 2
 ```
 (@) Explain in a few sentences, what happened in the code above?
-
+R took the vector of my numbers which contained numbers 2,4,6,8 and multiplied 2 across all the numbers within the value. This is R doing the distributive property of multiplication.
 >
 
 Lets try something slightly different. 
@@ -249,11 +249,11 @@ my.numbers[3] * 2
 ```
 (@) Explain in a few sentences, what happened in the code above? 
 
->
+> R took the third value in the vector, which was 6, and multiplied it by 2 to get 12.
 
 (@) You try, create a list of five items and store it in a descriptive variable. 
 ```{r}
-
+my_family <- c("David", "Isaiah", "Selah","Joshua","Shylah")
 ```
 
 
