@@ -426,13 +426,26 @@ print(latest_year)
 #the latest year was 1985. i got this by modifying my previous earliest year attempt.
 
 (@) Add another dataset from `DigitalMethodsData`. How many observations are included in this dataset? Run through some of the examples from above to learn about the dataset.
+#I ran the undergroundRR dataset. There are 997 observations and 18 variables.
+
 ```{r}
-data(gayguides)
+data("UndergroundRR")
+```
+```{r}
+head(undergroundRR)
+```
+
+```{r}
+str(undergroundRR)
+```
+
+```{r}
+head(undergroundRR, 100)
 ```
 
 (@) What did you learn about the dataset? What can you tell me about it? 
 
->
+> I learned that the dataset contains details about individuals that Still processed through the underground RR. I found most interesting notes on how people were transported, who their enslaver was, and if they were literate. I attempted to get a mean for the age, but could not get the code to work. I think that finding the average age of those who were helped would be interesting- my gut says it would be in the lower thirties, but I would like to know for sure.
 
 
 
