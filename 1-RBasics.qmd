@@ -427,8 +427,7 @@ print(latest_year)
 
 (@) Add another dataset from `DigitalMethodsData`. How many observations are included in this dataset? Run through some of the examples from above to learn about the dataset.
 ```{r}
-data("CharlestonManumissions")
-head(CharlestonManumissions)
+data(gayguides)
 ```
 
 (@) What did you learn about the dataset? What can you tell me about it? 
