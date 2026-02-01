@@ -41,7 +41,10 @@ x[c(3,3)]
 ```
 (@) Create your own vector and return three values using the subsetting method above. 
 ```{r}
-
+y <- c(8,9,11,12,14)
+y[order(y)]
+y[c(2,4)]
+y[c(5,5)]
 ```
 
 
@@ -52,7 +55,7 @@ x[-c(3, 1)]
 
 (@) What happened here? Describe this in your own words. 
 
->
+>It returned a list of values for x but excluded the third and first number from the orginal vector.
 
 You can use either positive or negative integers to subset a vector but you **cannot mix the two**.
 
@@ -69,7 +72,7 @@ x[x > 7]
 
 (@) What is going on in each of the lines above? Describe it in your own words. 
 
->
+> Each value in the vector for x was assigned a true or false value. Then when the function was ran that tested for true or false values with the vector, only the values that have been assigned the value of TRUE were returned, which were the first, third, and fourth numerical values. The second function asked that only values which were greater than 7 be returned, resulting in the numbers 8,9,11,12,and 14 to be returned.
 
 Nothing returns the original vector. This isn't that useful here but can come in handy when you have more complex structures like matrices and arrays. 
 ```{r}
