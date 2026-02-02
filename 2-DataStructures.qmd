@@ -42,8 +42,14 @@ x[c(3,3)]
 (@) Create your own vector and return three values using the subsetting method above. 
 ```{r}
 y <- c(8,9,11,12,14)
+```
+```{r}
 y[order(y)]
+```
+```{r}
 y[c(2,4)]
+```
+```{r}
 y[c(5,5)]
 ```
 
