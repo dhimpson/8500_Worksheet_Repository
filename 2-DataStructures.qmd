@@ -78,7 +78,7 @@ x[x > 7]
 
 (@) What is going on in each of the lines above? Describe it in your own words. 
 
-> Each value in the vector for x was assigned a true or false value. Then when the function was ran that tested for true or false values with the vector, only the values that have been assigned the value of TRUE were returned, which were the first, third, and fourth numerical values. The second function asked that only values which were greater than 7 be returned, resulting in the numbers 8,9,11,12,and 14 to be returned.
+> Each value in the vector for x was assigned a true or false value. Then when the function was ran that tested for true or false values with the vector, only the values that have been assigned the value of TRUE were returned, which were the first, third, and fourth numerical values. The second function asked that only values which were greater than 7 be returned, resulting in the numbers 15.40 25.00 8.35 383.00 and 10.20 to be returned.These are the values that are greater than seven and prove to be TRUE when tested.
 
 Nothing returns the original vector. This isn't that useful here but can come in handy when you have more complex structures like matrices and arrays. 
 ```{r}
@@ -91,6 +91,7 @@ If your vector is named, you can also use character vectors to return elements w
 y[c("d")]
 ```
 (@) What happened here? Explain this in your own words. 
+The vector resulted in a NA which means Not Available. Is this because "d" was entered as a character and letters were numerical?
 
 #### Matrices
 
@@ -107,12 +108,11 @@ In the `matrix()` function:
 
 (@) You try now, create a matrix that had five rows with numbers that range from 25 to 49. 
 ```{r}
-
+matrix(25:49, byrow=TRUE, nrow=5)
 ```
 
 (@) Can you create a matrix that has 3 rows with only even numbers from 2 to 18? 
 ```{r}
-
 ```
 
 ##### Subsetting Matricies 
