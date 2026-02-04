@@ -234,6 +234,7 @@ gayguides %>% head(10)
 
 (@) Use the pipe to subset the gayguides data to get the title column, then look at the first 20 entries.
 ```{r}
+gayguides$title %>% head(20)
 ```
 
 ## Putting It All Together: Historical Data Challenges
@@ -249,7 +250,8 @@ Hint: Break this into steps:
    - Step 3: Combine these conditions
    - Step 4: Use this combined condition to subset the data
 ```{r}
-
+gayguides$state=="CA"
+gayguides
 ```
 
 (@) The `amenityfeatures` column contains codes about each location. Can you find all entries that mention "(G)" for girls/women anywhere in their amenity features during 1975? How many locations specifically catered to women that year?
