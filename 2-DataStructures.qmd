@@ -197,9 +197,9 @@ I looked at the BostonWomensVoters data to see the age and place of business for
 Another useful operator to know is `$` which we used a little bit in the previous worksheet. `$` is shorthand for accessing a variable in a dataframe. 
  
 So for example both of these produce the same result. One is just easier to type. Because the output here is so large, I've commented these two lines out. Uncomment them and the run the block.
-```{r R.options=list(max.print=10)}
-#gayguides["title"]
-#gayguides$title
+  ```{r R.options=list(max.print=10)}
+gayguides["title"]
+gayguides$title
 ```
 
 Notice the above output is _huge_. We can combine `$` and `[` to drill down more specifically like we did earlier.
@@ -209,11 +209,11 @@ gayguides$city[100:110]
 
 (@) What does this code do? 
 
->
+>Provided the cities listed from row 100 to 110
 
 (@) Can you find all the titles of locations in South Carolina? (Hint: You'll need to use both `$` and `[]`)
 ```{r}
-
+gayguides$state=="SC"
 ```
 
 We can also use `$` to create a new column in `gayguides`. 
