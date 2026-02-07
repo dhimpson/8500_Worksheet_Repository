@@ -306,6 +306,9 @@ nrow(Main_St_Voters)
 
 (@) Using subsetting techniques, can you find the occupations of the five oldest women in the dataset? What were they?
 ```{r}
+BostonWomenVoters[order(BostonWomenVoters$Age, decreasing = TRUE), "Occupation"] [1:5]
+```
+### they are: [1] "At home"        "At home"        "[home?]"        "Housekeeper"   [5] "Widow\nRetired"
 # Hint: You might need to order the data first, then subset
 # The order() function could be helpful
 ```
