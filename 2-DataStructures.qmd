@@ -261,6 +261,12 @@ CA_70s <- is_1970s & gayguides$state=="CA"
 
 (@) The `amenityfeatures` column contains codes about each location. Can you find all entries that mention "(G)" for girls/women anywhere in their amenity features during 1975? How many locations specifically catered to women that year?
 ```{r}
+Women_Amenities_1975 <- subset(gayguides,Year == 1975 & grepl("(G)", amenityfeatures, fixed = TRUE))
+nrow(Women_Amenities_1975)
+```
+# 250 locatiions catered to women that year.
+
+
 # Hint: You'll need to search within the amenityfeatures text
 # The str_detect() function might be useful, or you could use grepl()
 ```
