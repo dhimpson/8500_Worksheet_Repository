@@ -251,7 +251,12 @@ Hint: Break this into steps:
    - Step 4: Use this combined condition to subset the data
 ```{r}
 gayguides$state=="CA"
-gayguides
+```
+```{r}
+is_1970s <- gayguides$date >= "1970-01-01" & gayguides$date <= "1979-12-31"
+```
+```{r}
+CA_70s <- is_1970s & gayguides$state=="CA"
 ```
 
 (@) The `amenityfeatures` column contains codes about each location. Can you find all entries that mention "(G)" for girls/women anywhere in their amenity features during 1975? How many locations specifically catered to women that year?
@@ -264,17 +269,40 @@ gayguides
 
 Load the Boston Women Voters dataset and use subsetting to answer these historical questions:
 ```{r}
-
+library(DigitalMethodsData)
+```
+```{r}
+data("BostonWomenVoters")
 ```
 
 (@) Find all women voters who were over 50 years old. Then find all the voters who were under the age of 50. How many were there? What can you say about the age distribution of women voters?
 ```{r}
+str(BostonWomenVoters)
+```{r}
+sum(BostonWomenVoters$Age >= 50, na.rm = TRUE)
 ```
-
+```{r}
+sum(BostonWomenVoters$Age <= 50, na.rm = TRUE)
+```
+```{r}
+Age_20_30 <- BostonWomenVoters [BostonWomenVoters$Age >= 20 & BostonWomenVoters$Age <= 30, ]
+nrow(Age_20_30)
+```
+``` {r}
+Age_31_40 <- BostonWomenVoters [BostonWomenVoters$Age >= 31 & BostonWomenVoters$Age <= 40, ]
+nrow(Age_31_40)
+```
+```{r}
+Age_41_50 <- BostonWomenVoters [BostonWomenVoters$Age >= 41 & BostonWomenVoters$Age <= 50, ]
+nrow(Age_41_50)
+```
+## The total women over 50 years is 2583. The total women voters under 50 is 8294. I found out the 3187 of these women were in the 20 to 30 age bracket. 2795 were ages 31 to 40 and 2537 were between the ages of 41 and 50. I find it interesting that the largest group of women voters under 50 were between the ages of 20 and 30, just when their adult lives are beginning to come to solidify.
 (@) Can you create a subset that includes only women voters who lived on "Main" street (the street name contains "Main")? How many were there? # Hint: You'll need to search within the street column. This will require a bit of googling and reading documentation. Look for a function that will allow you to search within a column.
 ```{r}
-
+Main_St_Voters <- BostonWomenVoters[grepl("Main", BostonWomenVoters$Street.of.Residence.on.April.1),]
+nrow(Main_St_Voters)
 ```
+## I came up with 4 voters who lived on "Main" street.
 
 (@) Using subsetting techniques, can you find the occupations of the five oldest women in the dataset? What were they?
 ```{r}
