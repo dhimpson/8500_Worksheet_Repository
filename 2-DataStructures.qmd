@@ -250,13 +250,13 @@ Hint: Break this into steps:
    - Step 3: Combine these conditions
    - Step 4: Use this combined condition to subset the data
 ```{r}
-gayguides$state=="CA"
+ca_locations <- gayguides$state=="CA"
 ```
 ```{r}
 is_1970s <- gayguides$date >= "1970-01-01" & gayguides$date <= "1979-12-31"
 ```
 ```{r}
-CA_70s <- is_1970s & gayguides$state=="CA"
+CA_70s <- is_1970s & ca_locations
 ```
 
 (@) The `amenityfeatures` column contains codes about each location. Can you find all entries that mention "(G)" for girls/women anywhere in their amenity features during 1975? How many locations specifically catered to women that year?
