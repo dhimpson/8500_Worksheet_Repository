@@ -67,18 +67,27 @@ if (x > 90) {
 
 (@) You are teaching History 100 for Clemson. Write an `if` statement that calculates whether the enrollment cap of 30 on your class has been met. 
 ```{r}
-if (enrollment <= 90) print (TRUE) else print("not yet")
+if (enrollment <= 30) print (TRUE) else print("not yet")
 ```
 
 (@) Create a list of presidents and store it in a variable. Use an `if` statement to check if the number of presidents in the list is more than 5. If its not, indicate that too. 
 ```{r}
-list_of_presidents <- (Carter, Regan, HWBush, Clinton, WBush, Obama)
-if (list_of_presidents > 5) print(TRUE) else print("add more presidents")
+list_of_presidents <- c("Carter", "Regan","HWBush","Clinton", "WBush","Obama")
+if (length(list_of_presidents > 5)) {
+  print(TRUE) 
+} else {
+  print("add more presidents")
+}
 ```
 
 (@) You can also use an if statement to check a variable in a dataframe. How might you use an if statement to check if the GayGuides dataset contains any year after 1990? (Hint: first try to figure out how to determine the latest year in the dataframe and then build an if statement that checks that and prints something out if its true or false. You should think about what kind of value in contained in the Year column, how to access it, and how to check for the latest value.) 
 
 ```{r}
+if (any(gayguides$Year > 1990)) {
+  print("The dataset contains years after 1990.")
+} else {
+  print("No years after 1990 were found.")
+}
 ```
 
 (@) Reflect on the question above. How did you figure this out? What was the process you went through to build this chunk of code?
@@ -128,11 +137,17 @@ for (class in classes){
 
 (@) Now let's practice with data. Create a loop that prints out the first 5 titles from the gayguides dataset. Hint: You'll need to loop from 1 to 5 and access `gayguides$title[i]`
 ```{r}
-
+for (i in 1:5) {
+  print(gayguides$title[i])
+}
 ```
 
 (@) Can you modify the above loop to only print titles that contain the word "Bar"? (Hint: use grepl() to search for "Bar" in the title)
 ```{r}
+for (i in 1:5) {
+  if(grepl("Bar", gayguides$title[i]))
+  print(gayguides$title[i])
+}
 ```
 
 Sometimes we want our loop to terminate itself early. There are two statements that help us do that: 
@@ -163,17 +178,21 @@ for (i in 1:10) {
 ```
 
 (@) What happened here? Why did the loop only print 3 and 4? 
-
+the first and second time the loop runs it notes that the value is TRUE for 'i<3' and it moves onto the 'next' and skips 1 and 2. The third time it notes that i is not less than 3 and it is not greater than or equal to 5 so it prints the number 3. The same thing happens for 4. The fifth run sees i meeting the condition of greater than or equal to 5 and the 'break' is intiated and ends the loop.
 
 (@) What if we wanted to loop through the gay guides data? Can you write a loop that iterates through the cities in the Gay Guides data and returns the title of any location in Greenville? 
 ```{r}
-
+for (i in 1:lenth(gayguides$city)) {
+  if (i == "Greenville")
+  print (i)
+}
 ```
+### not sure if i did this right? i got [i] 5
 
 (@) The Gay Guides data is quite large (60,000+ entries). Write a loop that searches through the data and finds the first 5 locations in New York City. Your loop should:
 - Use `next` to skip any entries that aren't in New York
 - Print each NYC location's title as you find it  
-- Use `break` to stop the loop after finding 5 locations (no need to search all 60k rows!)
+- Use `bTreak` to stop the loop after finding 5 locations (no need to search all 60k rows!)
 
 **Hint:** Create a counter to track how many you've found.
 ```{r}
