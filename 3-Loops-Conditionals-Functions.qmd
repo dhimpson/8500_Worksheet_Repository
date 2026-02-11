@@ -178,16 +178,16 @@ for (i in 1:10) {
 ```
 
 (@) What happened here? Why did the loop only print 3 and 4? 
-the first and second time the loop runs it notes that the value is TRUE for 'i<3' and it moves onto the 'next' and skips 1 and 2. The third time it notes that i is not less than 3 and it is not greater than or equal to 5 so it prints the number 3. The same thing happens for 4. The fifth run sees i meeting the condition of greater than or equal to 5 and the 'break' is intiated and ends the loop.
+### The first and second time the loop runs it notes that the value is TRUE for 'i<3' and it moves onto the 'next' and skips 1 and 2. The third time it notes that i is not less than 3 and it is not greater than or equal to 5 so it prints the number 3. The same thing happens for 4. The fifth run sees i meeting the condition of greater than or equal to 5 and the 'break' is intiated and ends the loop.
 
 (@) What if we wanted to loop through the gay guides data? Can you write a loop that iterates through the cities in the Gay Guides data and returns the title of any location in Greenville? 
 ```{r}
-for (i in 1:lenth(gayguides$city)) {
-  if (i == "Greenville")
-  print (i)
+for (i in 1:length(gayguides$city)) {
+  if (gayguides$city[i] == "Greenville")
+  print (gayguides[i, ])
 }
 ```
-### not sure if i did this right? i got [i] 5
+### not sure if i did this right? my first attempt, i got [i] 5. i googled it and saw that i might need to tell R to look at the content of the city column, not just the number of entries. However, my new code says 'location cannot be verified. General city or location coordinates used.' Fixed by spelling length correctly... sheesh.
 
 (@) The Gay Guides data is quite large (60,000+ entries). Write a loop that searches through the data and finds the first 5 locations in New York City. Your loop should:
 - Use `next` to skip any entries that aren't in New York
@@ -196,7 +196,17 @@ for (i in 1:lenth(gayguides$city)) {
 
 **Hint:** Create a counter to track how many you've found.
 ```{r}
+count <- 0
+for (i in 1:nrow(gayguides)) {
 
+  if (gayguides$city[i] != New York City){
+    next
+  }
+
+  print(gayguides$title[i])
+  if (count == 5)
+  break
+}
 ```
 
 `while` is another useful tool for writing loops. While will run a loop _while_ a condition is true. Once that condition is not true, it exits. For example: 

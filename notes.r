@@ -26,3 +26,4 @@ if (BostonWomenVoters$Occupation[4] == "Housewife") {
   print("this woman is neither")
 }
 for (i in nrow(BostonWomenVoters [1]))
+
