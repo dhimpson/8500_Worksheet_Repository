@@ -145,11 +145,11 @@ for (i in 1:5) {
 (@) Can you modify the above loop to only print titles that contain the word "Bar"? (Hint: use grepl() to search for "Bar" in the title)
 ```{r}
 for (i in 1:5) {
-  if(grepl("Bar", gayguides$title[i]))
+  if(grepl("Bar", gayguides$title[i], ignore.case = TRUE)) {
   print(gayguides$title[i])
 }
 ```
-
+### check this again since I added ignore case
 Sometimes we want our loop to terminate itself early. There are two statements that help us do that: 
 
 * `next` exits the current iteration
@@ -196,18 +196,22 @@ for (i in 1:length(gayguides$city)) {
 
 **Hint:** Create a counter to track how many you've found.
 ```{r}
-count <- 0
-for (i in 1:nrow(gayguides)) {
+nyc_count <- 0
+for (i in 1:length(gayguides$city)) {
 
-  if (gayguides$city[i] != New York City){
+  if (gayguides$city[i] != "New York City")
     next
-  }
-
+  
   print(gayguides$title[i])
-  if (count == 5)
+  nyc_count <- nyc_count +1
+  if (nyc_count >= 5)
   break
+
 }
 ```
+
+###see photo on phone
+
 
 `while` is another useful tool for writing loops. While will run a loop _while_ a condition is true. Once that condition is not true, it exits. For example: 
 ```{r}
