@@ -197,20 +197,20 @@ for (i in 1:length(gayguides$city)) {
 **Hint:** Create a counter to track how many you've found.
 ```{r}
 nyc_count <- 0
-for (i in 1:length(gayguides$city)) {
+for(i in 1:length(gayguides$city)){
 
   if (gayguides$city[i] != "New York City")
     next
   
   print(gayguides$title[i])
-  nyc_count <- nyc_count +1
-  if (nyc_count >= 5)
+  nyc_count <- nyc_count + 1
+  if(nyc_count >= 5)
   break
 
 }
 ```
 
-###see photo on phone
+
 
 
 `while` is another useful tool for writing loops. While will run a loop _while_ a condition is true. Once that condition is not true, it exits. For example: 
@@ -272,10 +272,20 @@ Let's start with a simpler function to build confidence.
 
 (@) Write a function called `double()` that takes a number and returns that number multiplied by 2.
 ```{r}
+double <- function(y){
+  my_results <- y * 2
+  my_results
+}
 ```
+
 
 (@) Write a function called `greet()` that takes a name and returns "Hello, [name]!" 
 ```{r}
+greet <- function(name) {
+  message <- paste("Hello", name)
+  return(message)
+}
+greet("Dori")
 ```
 
 Now let's try something more complex:

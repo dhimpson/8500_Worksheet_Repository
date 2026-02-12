@@ -27,3 +27,21 @@ if (BostonWomenVoters$Occupation[4] == "Housewife") {
 }
 for (i in nrow(BostonWomenVoters [1]))
 
+
+
+journals <- data.frame(
+  title = c("AHR", 
+            "JAH",
+            "WMQ",
+            "AHR",
+            "JSH"),
+  month = c("January", "March", "April", "July", "October"),
+  year = c(1920, 1920, 1920, 1921, 1921)
+)
+journal_titles <- c("AHR", "JAH","WMQ", "AHR", "JSH")
+journals$title[1]
+journals$month[1]
+journals$year[1]
+paste(journals$title[1],journals$month[1],journals$year[1])
+paste0(journals$title[1],journals$month[1],journals$year[1])
+paste(journals$title[1],journals$month[1],journals$year[1], ".txt", sep = "-")
