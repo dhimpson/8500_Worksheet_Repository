@@ -276,6 +276,7 @@ double <- function(y){
   my_results <- y * 2
   my_results
 }
+double(4)
 ```
 
 
@@ -293,12 +294,17 @@ Now let's try something more complex:
 
 (@) Write a function that takes a string of text and counts the number of characters. The function should return "There are xx characters in that string." 
 ```{r}
-
+count_chars <- function(text) {
+  number <- nchar(text)
+  result <- paste("There are", number, "characters in that string.")
+  return(result)
+}
+count_chars("stressedout")
 ```
 
 (@) Reflect on the process of building the above function. How did you go about figuring this out? 
 
->
+>I began by creating my function and telling r that my input will be a piece of text.  I then loaded the function into my global enviroment to use later. I then created a code to look at the string and count the characters in that string. This amount will be saved to a variable called number. I asked the program to give me a result that would paste together the words in my desired output statement and include the number of characters in whatever string the function examines. The result for my test of my function count_chars("stressedout") was "There are 11 characters in that string." 
 
 The body of a functions can use any of the techniques we've learned in this worksheet like loops and if statements. For example: 
 ```{r}
