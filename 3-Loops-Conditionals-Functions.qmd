@@ -286,6 +286,7 @@ greet <- function(name) {
   return(message)
 }
 greet("Dori")
+
 ```
 
 Now let's try something more complex:
