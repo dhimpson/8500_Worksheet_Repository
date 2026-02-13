@@ -332,7 +332,7 @@ grade(75)
 GeorgeWashington <- grade(60)
 ```
 
->
+>Is it that the computer does not know who he is? While the grade() function is loaded, there is no data relating George Washington to this function.
 
 
 Here's a more complex example: 
