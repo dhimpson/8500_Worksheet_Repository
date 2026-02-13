@@ -355,11 +355,27 @@ gg.locations("San Diego", 1980)
 (@) Write a function that accepts two arguments: a state and a year. The function should pull all the locations in that state and year from the gayguides dataset and return a statement that says "Found a location in [state] called [location title]". (Where [state] is the state and [location title] is the title of a location in that year and state.)
 
 ```{r}
-
+gg.locations_by_state <- function (d.state, d.year) {
+  data(gayguides)
+  for (i in 1:length(gayguides$state)) {
+    if (gayguides$state[i] == d.state && gayguides$Year[i] == d.year) {
+      print(paste("Found a location in [d.state] called [location title]", gayguides$title[i]))
+    } else {
+      next
+    }
+  }
+}
+gg.locations_by_state("SC", 1975)
 ```
 
 (@) Use the Boston Women Voters dataset (BostonWomenVoters). Write a function that accepts the name of an occupation. Your function should return new dataframe that includes the records for every voter listed with that occupation.  
 ```{r}
+
+bwm.occupations <- function (Housewife) {
+  data(BostonWomenVoters)
+  result.df <- subset(BostonWomenVoters,Occupation == Housewife)
+  return (result.df)
+}
 
 ```
 
