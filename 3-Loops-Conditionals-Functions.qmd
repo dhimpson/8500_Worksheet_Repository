@@ -375,7 +375,7 @@ bwv.occupations <- function(job_title)
   data(BostonWomenVoters)
   result <- data.frame()
   for (i in 1:nrow(BostonWomenVoters)) {
-    if (BostonWomenVoters$Occupation[i] == "job_title")
+    if (BostonWomenVoters$Occupation[i] == job_title)
   {
     result <- rbind(result, BostonWomenVoters[i,])
 
@@ -399,17 +399,20 @@ test_results <- bwv.occupations("Housewife")
 ```{r}
 data(gayguides)
 count_by_state <- function(st_abbrev) {
-  data(gayguides)
-  counter <- 0
+  count <- 0
   for (i in 1:nrow(gayguides)) {
-    if (gayguides$state[i] == st_abbrev) {
-      counter <- counter = 1
+   
+    if (!is.na(gayguides$state[i]) && gayguides$state[i] == st_abbrev) {
+      count <- count + 1
     }
   }
+  statement <- paste("There are", count, "locations in", st_abbrev)
+  return(statement)
 }
-message <- paste("There are", counter, "locations in", st_abbrev)
-return(message)
-count_by_state("SC")
+
+count_by_state("CA")
+##"There are 12467 locations in CA"
+
 ```
 
 (@) Can you modify your function to also accept a year as a second argument? So `count_by_state("SC", 1975)` would count locations in SC in 1975.

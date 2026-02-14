@@ -45,3 +45,43 @@ journals$year[1]
 paste(journals$title[1],journals$month[1],journals$year[1])
 paste0(journals$title[1],journals$month[1],journals$year[1])
 paste(journals$title[1],journals$month[1],journals$year[1], ".txt", sep = "-")
+
+
+##saving this from worksheet 3 while I attempt another way to solve issues
+data(gayguides)
+count_by_state <- function(st_abbrev) {
+  data(gayguides)
+  counter <- 0
+  for (i in 1:nrow(gayguides)) {
+    if (gayguides$state[i] == st_abbrev) {
+      counter <- counter + 1
+    }
+  }
+}
+message <- paste("There are", counter, "locations in", st_abbrev)
+
+return(message)
+count_by_state("SC")
+
+## another attempt. I keep getting error codes: attempt to use zero-length variable
+or count not found.
+```data(gayguides)
+count_by_state <- function(st_abbrev) {
+  data(gayguides)
+  count <- 0
+
+  state_column <- as.character(gayguides$state)
+
+  for (i in 1:length(state_column)) {
+    if (!is.na(state_column[i]) && trimws(state_column[i]) == st_abbrev) {
+      
+      count <- count + 1
+    }
+  }
+}
+return(paste("There are", count, "locations in", st_abbrev))
+
+
+count_by_state("CA")
+## note for error sheet: document why I used !is.na and trimws() per google. these did seemed to narrow down my problems. 
+## also note that i had count and counter, and state and State seemed to be the last mistake preventing it workng.
