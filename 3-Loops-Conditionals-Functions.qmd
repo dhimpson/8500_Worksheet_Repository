@@ -370,23 +370,23 @@ gg.locations_by_state("SC", 1975)
 
 (@) Use the Boston Women Voters dataset (BostonWomenVoters). Write a function that accepts the name of an occupation. Your function should return new dataframe that includes the records for every voter listed with that occupation.  
 ```{r}
-##this is still not working
-bwv.occupations <- function(job_title) 
+##this is still not working ## check bracket locations
+bwv.occupations <- function(job_title) { 
   data(BostonWomenVoters)
   result <- data.frame()
   for (i in 1:nrow(BostonWomenVoters)) {
     if (BostonWomenVoters$Occupation[i] == job_title)
   {
-    result <- rbind(result, BostonWomenVoters[i,])
+    result <- rbind(result, BostonWomenVoters[i, ])
 
   }
    
   return (result)
-}
+}}
 bwv.occupations("Housewife")
 bwv.occupations.result <- bwv.occupations("Housewife")
 test_results <- bwv.occupations("Housewife")
-view(data.frame)
+
 ```
 
 
@@ -424,7 +424,7 @@ count_by_state <- function(st_abbrev, target_year ) {
   count <- 0
   for (i in 1:nrow(gayguides)) {
    
-    if (!is.na(gayguides$state[i]) && gayguides$state[i] == st_abbrev) {
+    if (!is.na(gayguides$state[i]) && gayguides$state[i] == st_abbrev && gayguides$Year == target_year) {
       count <- count + 1
     }
   }
@@ -432,7 +432,6 @@ count_by_state <- function(st_abbrev, target_year ) {
   return(statement)
 }
 
-```
 
 (@) Reflection: How do loops, conditionals, and functions work together? Give an example from this worksheet where you used all three.
 
