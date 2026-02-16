@@ -257,7 +257,7 @@ historyStudents <- function(studentname, class) {
 
 (@) Can you run this function? 
 ```{r}
-
+## I do not think that I can run this function.
 ```
 
 
@@ -332,7 +332,7 @@ grade(75)
 GeorgeWashington <- grade(60)
 ```
 
->Is it that the computer does not know who he is? While the grade() function is loaded, there is no data relating George Washington to this function.
+>## Is it that the computer does not know who he is? While the grade() function is loaded, there is no data relating George Washington to this function.
 
 
 Here's a more complex example: 
@@ -370,7 +370,7 @@ gg.locations_by_state("SC", 1975)
 
 (@) Use the Boston Women Voters dataset (BostonWomenVoters). Write a function that accepts the name of an occupation. Your function should return new dataframe that includes the records for every voter listed with that occupation.  
 ```{r}
-##this is still not working ## check bracket locations
+
 bwv.occupations <- function(job_title) { 
   data(BostonWomenVoters)
   result <- data.frame()
@@ -418,7 +418,9 @@ count_by_state("CA")
 
 (@) Can you modify your function to also accept a year as a second argument? So `count_by_state("SC", 1975)` would count locations in SC in 1975.
 ```{r}
-##start here and follow pattern for d.year and d.city
+## start here and follow pattern for d.year and d.city
+## come back to this later. 
+
 
 count_by_state <- function(st_abbrev, target_year ) {
   count <- 0
@@ -435,4 +437,4 @@ count_by_state <- function(st_abbrev, target_year ) {
 
 (@) Reflection: How do loops, conditionals, and functions work together? Give an example from this worksheet where you used all three.
 
->
+>## A loop is code written to repeat a series of actions over a vector. Conditionals such as if, else, and next provide options where the code can diverge from the loop's set path to perform another function if the conditon is met. A function is a specific set of code that is written for the computer execute a action in a specific way. Functions are stored in the enviroment of Visual Studio Code and can be called upon when needed to execute. These items work in tandem to allow the user to sort through data and specify what data needs to be found in a dataset. The question at line 400 contains a loop which searches through the gayguides data for numerical locations in a specified state. It uses the function count_by_state <- function(st_abbrev) to do this and has conditionals that result in either desired results returned or ignored based upon if the data meets the conditions that are given.
