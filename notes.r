@@ -85,3 +85,20 @@ return(paste("There are", count, "locations in", st_abbrev))
 count_by_state("CA")
 ## note for error sheet: document why I used !is.na and trimws() per google. these did seemed to narrow down my problems. 
 ## also note that i had count and counter, and state and State seemed to be the last mistake preventing it workng.
+
+#work from tidying data chapter
+df <- tribble(
+  ~id, ~measurement, ~ value,
+  "A",     "bp1",     100,
+  "B",      "bp1",    140,
+  "B",      "bp2",    115,
+  "A",      "bp2",    120,
+  "A",      "bp3",    105
+  )
+
+df |>
+  pivot_wider( # nolint
+    names_from = measurement # nolint
+    values_from = value
+)
+  

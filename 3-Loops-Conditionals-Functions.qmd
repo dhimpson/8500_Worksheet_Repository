@@ -425,14 +425,15 @@ count_by_state_and_year <- function(st_abbrev, target_year)  {
   count <- 0
   for (i in 1:nrow(gayguides)) {
    
-    if (!is.na(gayguides$state[i]) && gayguides$state[i] == st_abbrev) {
+    if (!is.na(gayguides$state[i]) && gayguides$state[i] == st_abbrev && gayguides$Year == target_year) {
       count <- count + 1
     }
   }
   statement <- paste("There are", count, "locations in", st_abbrev)
   return(statement)
 }
-
+count_by_state_and_year("SC",1975)
+```
 
 
 
