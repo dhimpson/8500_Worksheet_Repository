@@ -39,16 +39,16 @@ Notice that this subsetted the data and returned only the title and year. Howeve
 
 (@) Use `select()` to take the city and state from gayguides and add them to a dataframe called "locations". 
 ```{r}
-
+locations <- gayguides %>% select(city, state)
 ```
 
 (@) What did you do to save the data to a new data frame? Why? 
 
->
+>I saved the dataframe as a variable. I can then call it later to use in other arguments.
 
 (@) Can you use `select()` to grab all the columns of `gayguides` EXCEPT for the city and state? Hint: You might want to read the documentation for this function. 
 ```{r}
-
+gayguides.info <- gayguides %>% select(-city, -state)
 ```
 
 ### Filter
@@ -76,25 +76,31 @@ gayguides %>%
 (@) The above code grabs every location where the city is Greenville. However, there is more than one city named Greenville. Can you filter to retrieve Greenville, SC? 
 
 ```{r}
-
+home_gayguides <- gayguides %>% 
+  filter(city == "Greenville" & state == "SC")
 ```
 
 (@) How about every location between 1975 and 1980? 
 
 ```{r}
-
+seventies.locations <- gayguides %>% filter(Year >= 1975 & Year <= 1980)
 ```
 
 
 (@) Every entry in Greenville, SC between 1975 and 1980? 
 
 ```{r}
-
+home_gayguides_in_seventies <- gayguides %>% 
+  filter(city == "Greenville" & state == "SC") %>%
+ filter(Year >= 1975 & Year <= 1980)
+```
 ```
 
 (@) Can you find all locations in 1975 except for New York and San Francisco? 
+## cannot get this cell to run. Says it is not executable.
 ```{r}
-
+locations_in_1975 <- gayguides %>% filter(city - = "New York" & city - = "San Francisco") %>%
+filter(Year = 1975)
 ```
 
 (@) The amenity features column in gay guides contains a comma separated list of categorizations. (G), for example, stands for girls. However, this language changed over time and women's locations eventually are described as (L). What if we want to filter by any entry that has (G) OR (L) in the amenity feature column?  This is a bit more complicated because the entries are a comma separated list and (G) or (L) is often paired with other categorizations. How might you _search the dataframe for entries that match_ (G) or (L)?
