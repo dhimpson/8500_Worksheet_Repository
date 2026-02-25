@@ -1,7 +1,7 @@
 ---
 title: 'Worksheet 3: Data Manipulation'
-author: ""
-date: ""
+author: "Dori Impson"
+date: "February 23, 2026"
 ---
 
 _This is the third in a series of worksheets for History 8500 at Clemson University. The goal of these worksheets is simple: practice, practice, practice. The worksheet introduces concepts and techniques and includes prompts for you to practice in this interactive document. When you are finished, you should change the author name (above), render your document to a pdf, and upload it to canvas. Don't forget to commit your changes as you go and push to github when you finish the worksheet._
@@ -97,16 +97,22 @@ home_gayguides_in_seventies <- gayguides %>%
 ```
 
 (@) Can you find all locations in 1975 except for New York and San Francisco? 
-## cannot get this cell to run. Says it is not executable.
+## cannot get this cell to run. Says it is not executable. Note that I ran it in the block below.
 ```{r}
-locations_in_1975 <- gayguides %>% filter(city - = "New York" & city - = "San Francisco") %>%
-filter(Year = 1975)
+locations_in_1975 <- gayguides %>% filter(city != "New York" & city != "San Francisco") %>%
+filter(Year == 1975)
 ```
+
 
 (@) The amenity features column in gay guides contains a comma separated list of categorizations. (G), for example, stands for girls. However, this language changed over time and women's locations eventually are described as (L). What if we want to filter by any entry that has (G) OR (L) in the amenity feature column?  This is a bit more complicated because the entries are a comma separated list and (G) or (L) is often paired with other categorizations. How might you _search the dataframe for entries that match_ (G) or (L)?
+## from the above
 ```{r}
+locations_in_1975 <- gayguides %>% filter(city != "New York" & city != "San Francisco") %>%
+filter(Year == 1975)
+
 
 ```
+
 
 ### Mutate
 The `mutate()` function adds new variables and preserves existing one. This is useful when you want to create a new column based on other values. For example, in the `statepopulation` dataset, we want to ask "How much did the population increase between 1800 and 1900 in each state?." We can do that by subtracting the population in 1900 from 1800 and storing that value in a new column. 
