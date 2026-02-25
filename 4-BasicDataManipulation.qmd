@@ -109,10 +109,11 @@ filter(Year == 1975)
 ```{r}
 locations_in_1975 <- gayguides %>% filter(city != "New York" & city != "San Francisco") %>%
 filter(Year == 1975)
-
-
 ```
-
+```{r}
+a.gayguides <- gayguides %>% filter(amenityfeatures == "(G)" & amenityfeatures == "(L)")
+```
+## I dont think I did this right. When I look at my dataframe it says "no rows to show"
 
 ### Mutate
 The `mutate()` function adds new variables and preserves existing one. This is useful when you want to create a new column based on other values. For example, in the `statepopulation` dataset, we want to ask "How much did the population increase between 1800 and 1900 in each state?." We can do that by subtracting the population in 1900 from 1800 and storing that value in a new column. 
@@ -125,14 +126,17 @@ statepopulations %>% mutate(difference = X1900 - X1800)
 
 (@) In the Boston Women Voters dataset, every voter is given an age. Can you use their age to calculate each person's birth year? (Assume all this data was collected in 1920.)
 ```{r}
-
+data(BostonWomenVoters)
+BostonWomenVoters %>% mutate(difference = 1920 - Age)
 ```
 
 (@) Can you create a new column that combines the city and state columns in `gayguides` into a new column called location? It should list the city, state. (i.e. San Diego, CA)
 
 ```{r}
+gayguides %>% mutate(location = paste(city, state))
 
 ```
+## I think the above worked, but I am unsure if I needed to create a new dataframe to store it??? 
 
 ### Working with Text: Introduction to `stringr`
 
