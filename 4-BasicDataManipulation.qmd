@@ -158,15 +158,18 @@ gayguides %>%
 
 (@) Many city names in the gayguides data have inconsistent capitalization. Can you create a new column that standardizes all city names to title case using `str_to_title()`?
 ```{r}
+gayguides %>% mutate(city = str_to_title(city))
 ```
 
 (@) The `amenityfeatures` column contains codes for different features of each location. These are abbreviations in parentheses like (D) for dancing, (E) for entertainment, (G) for girls/women, etc. Can you create a new column called `has_dancing` that is TRUE if the amenity features include "(D)"? (Hint: Use `grepl()` to search for "(D)" within the amenityfeatures column.
 ```{r}
+b.gayguides <- gayguides %>% mutate(has_dancing = grepl("D", amenityfeatures, fixed = TRUE))
 
 ```
 
 (@) In the Boston Women Voters data, occupation names may have extra whitespace. Use `str_trim()` to clean the occupation column.
 ```{r}
+BostonWomenVoters %>% mutate(str_trim("Occupation"))
 ```
 
 ### Arrange
