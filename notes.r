@@ -109,6 +109,7 @@ s.gayguides <- gayguides %>% select(title,Year)
 
 rec_data <- read.csv("https://raw.githubusercontent.com/regan008/DigitalMethodsData/main/raw/Recreation-Expenditures.csv")
 
+
 #which cities in SC reported recreation data?
 #Create a new dataset that shows only the city name and total expendentures.
 #Sorted by expenditure (highest to lowest). Save it to a variable.
@@ -122,3 +123,17 @@ rec_data_expenditures <- rec_data %>% arrange(desc(total_expenditures))
 rec_data_spending_per_cap <- rec_data %>% mutate(total_expenditures/population)
 
 rec_data_pop_spenders <- rec_data %>% filter()
+
+rec_data_pop_spending <- rec_data %>% filter(population >= 50,000 & total_expenditures > 25000)
+
+
+data(gayguides)
+
+
+gg_cities <- gayguides %>% filter(gayguides$city = "New York")
+
+cool_city <- function(cityname) {
+  gayguides %>% filter(city == cityname)
+}
+cool_city("San Diego")
+count=n()
