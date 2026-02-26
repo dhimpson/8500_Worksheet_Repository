@@ -232,18 +232,24 @@ BostonWomenVoters %>%
 
 (@) How many rows in the BostonWomenVoters dataset have missing ward information? 
 ```{r}
+## there were 42 rows with missing information. I used nrow(BostonWomenVoters) to get a row count of the original dataset (10702)and then subtracted the rows that were removed from the previous code after cleaning (10660)and came up with 42.
 ```
 
 (@) Why might ward information be missing for some voters? What does this tell us about the historical record?
 
->
+> This information may be missing for numerous reasons. It could have been omited on the original record or the handwriting might have been unreadable on the original record resulting in errors in transcription. To rule these issues out, I would double check these 42 entries with the original sources,if possible. The fact that there are only 42 missing entries out of over 10,000 entries demonstrates that those who were in charge of these voting wards were meticulous in their job of recording voting data for women.
 
 (@) Create a cleaned version of BostonWomenVoters that removes any row with missing data in the Ward or Age columns. How many rows are removed?
 ```{r}
-```
+BostonWomenVoters %>% 
+  drop_na(Ward | Age) %>%
+  nrow()
+``` ## 93 rows were removed
 
 (@) Sometimes we want to keep rows with missing data but identify them. Can you create a new column called `ward_missing` that is TRUE when Ward is NA and FALSE otherwise?
 ```{r}
+BostonWomenVoters %>% 
+  mutate(ward_missing = is.na(Ward))
 
 ```
 
