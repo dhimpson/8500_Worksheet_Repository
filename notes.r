@@ -137,3 +137,15 @@ cool_city <- function(cityname) {
 }
 cool_city("San Diego")
 count=n()
+
+
+largest_population <- statepopulation %>% 
+  filter(year == 1850) %>%
+  select(state, population) %>%
+  arrange(desc(population)) 
+  head(largest_population, 1)
+
+  statepopulations %>%
+filter(year == 1850) %>%
+select(state, population) %>%
+arrange(desc(population))

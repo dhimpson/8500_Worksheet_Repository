@@ -99,8 +99,10 @@ home_gayguides_in_seventies <- gayguides %>%
 
 (@) Can you find all locations in 1975 except for New York and San Francisco? 
 ## cannot get this cell to run. Says it is not executable. Note that I ran it in the block below.
+
 ```{r}
-locations_in_1975 <- gayguides %>% filter(city != "New York" & city != "San Francisco") %>%
+locations_in_1975 <- gayguides %>% 
+filter(city != "New York" & city != "San Francisco") %>%
 filter(Year == 1975)
 ```
 
@@ -108,11 +110,13 @@ filter(Year == 1975)
 (@) The amenity features column in gay guides contains a comma separated list of categorizations. (G), for example, stands for girls. However, this language changed over time and women's locations eventually are described as (L). What if we want to filter by any entry that has (G) OR (L) in the amenity feature column?  This is a bit more complicated because the entries are a comma separated list and (G) or (L) is often paired with other categorizations. How might you _search the dataframe for entries that match_ (G) or (L)?
 ## from the above
 ```{r}
-locations_in_1975 <- gayguides %>% filter(city != "New York" & city != "San Francisco") %>%
-filter(Year == 1975)
+locations_in_1975 <- gayguides %>%
+   filter(city != "New York" & city != "San Francisco") %>%
+   filter(Year == 1975)
 ```
 ```{r}
-a.gayguides <- gayguides %>% filter(grepl("(G)",gayguides$amenityfeatures) | grepl("L", gayguides$amenityfeatures))
+a.gayguides <- gayguides %>%
+   filter(grepl("(G)",gayguides$amenityfeatures) | grepl("L", gayguides$amenityfeatures))
 ```
 
 
@@ -164,8 +168,9 @@ gayguides %>% mutate(city = str_to_title(city))
 
 (@) The `amenityfeatures` column contains codes for different features of each location. These are abbreviations in parentheses like (D) for dancing, (E) for entertainment, (G) for girls/women, etc. Can you create a new column called `has_dancing` that is TRUE if the amenity features include "(D)"? (Hint: Use `grepl()` to search for "(D)" within the amenityfeatures column.
 ```{r}
-b.gayguides <- gayguides %>% mutate(has_dancing = grepl("D", amenityfeatures, fixed = TRUE))
-
+b.gayguides <- gayguides %>% 
+mutate(has_dancing = grepl("D", amenityfeatures, fixed = TRUE))
+View(b.gayguides)
 ```
 
 (@) In the Boston Women Voters data, occupation names may have extra whitespace. Use `str_trim()` to clean the occupation column.
@@ -189,12 +194,11 @@ gayguides %>%
 
 (@) Using the `statepopulation` data, which state has the largest population in 1850? Write code that pulls only the relevant columns (state and 1850) and sorts it accordingly. 
 ```{r}
-largest_population <- statepopulations %>% 
-  filter(year == 1850) %>%
-  select(state, population) %>%
-  arrange(desc(population)) 
-  head(largest_population,1)
-```
+statepopulations %>%
+select(STATE, X1850) %>%
+arrange(desc(X1850))
+head(STATE)
+``` ## New York had the largest population in 1850. 
 
 
 ### Handling Missing Data
@@ -232,7 +236,7 @@ BostonWomenVoters %>%
 
 (@) How many rows in the BostonWomenVoters dataset have missing ward information? 
 ```{r}
-## there were 42 rows with missing information. I used nrow(BostonWomenVoters) to get a row count of the original dataset (10702)and then subtracted the rows that were removed from the previous code after cleaning (10660)and came up with 42.
+## There were 42 rows with missing information. I used nrow(BostonWomenVoters) to get a row count of the original dataset (10702)and then subtracted the rows that were removed from the previous code after cleaning (10660)and came up with 42.
 ```
 
 (@) Why might ward information be missing for some voters? What does this tell us about the historical record?
@@ -262,7 +266,7 @@ In R, **factors** are used to represent categorical data (like occupation, state
 class(gayguides$state)  # Usually character
 
 # Convert to factor
-gg <- gayguides %
+gg <- gayguides %>%
   mutate(state_factor = as.factor(state))
 
 # See the levels (categories)
@@ -285,10 +289,17 @@ BostonWomenVoters %>%
 
 (@) Convert the `type` column in gayguides to a factor. How many different types of locations are there?
 ```{r}
-```
+gg_type <- gayguides %>%
+  mutate(type = as.factor(type))
+  nlevels(gg_type$type)
+ ``` ## I found 235 different types of locations
+ 
 
 (@) In the Boston Women Voters data, convert Occupation to a factor. What are the levels?
 ```{r}
-```
+bwv_jobs <- BostonWomenVoters %>%
+  mutate(Occupation = as.factor(Occupation))
+  nlevels(bwv_jobs$Occupation)
+``` ## I modified the levels part of the question based off of your response to Sharon's question in slack. I found 1137 levels.
 
 **Note:** We'll learn more advanced factor manipulation (reordering, recoding, collapsing) in the next worksheet!
