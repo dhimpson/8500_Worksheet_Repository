@@ -74,3 +74,43 @@ flights |>
 
 flights |>
     filter(dep_delay <= 60, arr_delay <= -30 )
+
+## sort flights to find the flights with the longest departure delays.note: sort() is used in R while arrange() is used in tidyverse.
+flights |> 
+    arrange(desc(dep_delay))
+
+## find the flights that left earliest in the morning.
+flights |>
+    arrange(dep_time)
+
+## sort flights to find the fastest flights.
+fastest_flights <-
+flights |>
+    arrange(arr_time - dep_time) |>
+    (fastest_flights)
+    print(fastest_flights)
+
+##was there a flight on every day of 2013?
+flights |>
+    filter(year == 2013) |>
+    filter(day %in% c(1:365))
+    ## this did not give me what I needed because of how the day column is formulated. It only counts the days in the months and stops at 31. So it will not return a value for 365.
+
+flights |>
+    distinct(day,month,year == 2013)
+    nrow()
+# this showed there were 365 days of flights in 2013
+
+## which flights traveled the farthest distance? the least distance?
+flights_distance <-
+flights |>
+    arrange(desc(distance))
+    View(flights_distance)
+
+flights_s_distance <-
+flights |>
+    arrange(distance)
+    View(flights_s_distance)
+    ## arrange will order smallest to biggest by default. to change this use desc()function.
+
+
