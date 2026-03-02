@@ -158,7 +158,7 @@ fruits <- c("apple", "banana", "cherry")
 for (fruit in fruits) {
   print(paste("I like", fruit))
 }
-
+##
 
 bwv.occupation <- function(Occupation) {
   data(BostonWomenVoters)
@@ -176,3 +176,4 @@ bwv.occupation <- function(Occupation) {
   # 3. Return AFTER loop completes
   return(result)
 }
+## class notes March 2
