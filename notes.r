@@ -149,3 +149,30 @@ largest_population <- statepopulation %>%
 filter(year == 1850) %>%
 select(state, population) %>%
 arrange(desc(population))
+
+
+## loops practice
+
+fruits <- c("apple", "banana", "cherry")
+
+for (fruit in fruits) {
+  print(paste("I like", fruit))
+}
+
+
+bwv.occupation <- function(Occupation) {
+  data(BostonWomenVoters)
+  
+  # 1. Create empty container OUTSIDE loop
+  result <- data.frame()
+  
+  # 2. Build it up INSIDE loop
+  for (i in 1:nrow(BostonWomenVoters)) {
+    if (BostonWomenVoters$Occupation[i] == Occupation) {
+      result <- rbind(result, BostonWomenVoters[i, ])
+    }
+  }
+  
+  # 3. Return AFTER loop completes
+  return(result)
+}
