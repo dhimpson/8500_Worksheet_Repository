@@ -96,7 +96,14 @@ gayguides %>%
 
 (@) Can you group the gayguides data by state AND type, then count how many of each type of location exists in each state? Which state has the most bars?
 ```{r}
-```
+gayguides %>%
+  group_by(state,type) %>%
+  summarize(count = n(), .groups = "drop") %>%
+  filter(type %in% c("Bars","Bars/Clubs")) %>%
+  group_by(state) %>%
+  summarize (total_bars = sum(count)) %>%
+  slice_max(total_bars, n = 1)
+```## CA has the most bars, 5490
 
 (@) Filter the dataset for only the values in the southernstates list (created in the block below). Then tell me, how many locations were in all the southern states in 1975?
 ```{r}
