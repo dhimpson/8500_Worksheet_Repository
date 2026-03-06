@@ -108,15 +108,11 @@ gayguides %>%
 (@) Filter the dataset for only the values in the southernstates list (created in the block below). Then tell me, how many locations were in all the southern states in 1975?
 ```{r}
 southernstates <- c("AL", "AR", "FL", "GA", "KY", "LA", "MD", "MS", "NC", "SC", "TN", "TX", "VI", "WV")
-
-gayguides %>%
-  group_by(state,type) %>%
-  summarize(count = n(), .groups = "drop") %>%
-  filter(type %in% c("Bars","Bars/Clubs")) %>%
-  group_by(southernstates) %>%
-  summarize(count = n(, .groups = "drop"))%>%
-  filter(Year = 1975)
-## filter by state (southernstates)
+southernstates_1975 <- gayguides %>%
+  filter(state %in% southernstates,Year == 1975 ) %>%
+  nrow() 
+southernstates_1975
+## There were 663 locations in the southern states in 1975.
 ```
 
 
@@ -149,10 +145,14 @@ new_regions <- gayguides %>%
 
 regions_in_1980 <- new_regions %>%
   filter(Year == 1980) %>%
-  group_by("regions") %>%
+  group_by("Region") %>%
   summarize(total_locations =n())
+
+  regions_in_1980 %>%
+  filter (Region == "Mountain")
+  regions_in_1980
   
-## somewhere I missed getting 'regions' included in my regions_in_1980 dataset. not sure this works.
+## I keep getting the same number: 1 region and 4468 locations.
 ```
 
 (@) Explain what you did above. What variable did you join by and why? What results?
