@@ -182,8 +182,9 @@ sc.parks <- sc.parks %>%
 
 (@) Here's another wide data frame. Can you turn this from a wide to a narrow data frame? 
 ```{r}
-rec.spaces <- read.csv("https://raw.githubusercontent.com/regan008/DigitalMethodsData/main/raw/PlayAreabyType.csv")
-pivot_longer(!type, snames_to = "year") 
+rec.spaces <- read.csv("https://raw.githubusercontent.com/regan008/DigitalMethodsData/main/raw/PlayAreabyType.csv") 
+rec.spaces.new <- rec.spaces %>%
+pivot_longer(!type, names_to = "year") 
 
 ```
 
@@ -195,14 +196,20 @@ sc.parks %>%
 
 (@) Widen the `sc.parks` dataset so that the column names are drawn from the type of recreation worker.
 ```{r}
+sc.parks %>%
+  pivot_wider(names_from = type_of_worker,values_from = count)
+```## i am not sure these two worked. They look the same??
 
-```## use the pivot.longer dataset count is the same. instead of year being the the value...
+
+## use the pivot.longer dataset count is the same. instead of year being the the value...
 
 
 (@) Turn `rec.spaces` into a wide dataframe. 
 ```{r}
-
+rec.spaces.new %>%
+  pivot_wider(names_from = year, values_from = value)
 ```
+## rec.spaces was already in my environment as a wide dataframe. I turned my new dataframe rec.spaces.new into a wide one instead.
 
 ## Working with Factors using `forcats`
 
