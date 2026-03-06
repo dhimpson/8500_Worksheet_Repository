@@ -145,11 +145,11 @@ new_regions <- gayguides %>%
 
 regions_in_1980 <- new_regions %>%
   filter(Year == 1980) %>%
-  group_by("Region") %>%
+  group_by("region") %>%
   summarize(total_locations =n())
 
   regions_in_1980 %>%
-  filter (Region == "Mountain")
+  filter (region == "Mountain")
   regions_in_1980
   
 ## I keep getting the same number: 1 region and 4468 locations.
@@ -159,7 +159,7 @@ regions_in_1980 <- new_regions %>%
 
 (@)How much did LGTBQ life grow between 1970 and 1980? Can you create a data frame that computes the growth in the number of locations between 1970 and 1980 for every state? For every region? 
 ```{r}
-
+## come back to this
 ```
 
 
@@ -178,11 +178,13 @@ sc.parks <- sc.parks %>%
 ```
 
 (@) What did this code do? 
->
+> It converted the columns of years into one year column that contains all 'year' data. 
 
 (@) Here's another wide data frame. Can you turn this from a wide to a narrow data frame? 
 ```{r}
 rec.spaces <- read.csv("https://raw.githubusercontent.com/regan008/DigitalMethodsData/main/raw/PlayAreabyType.csv")
+pivot_longer(!type, snames_to = "year") 
+
 ```
 
 The opposite of `pivot_longer()` is `pivot_wider()`. It "widens" data by increasing the number of columns and decreasing the number of rows. We can revert `sc.parks` back to a wide dataset using this function.
