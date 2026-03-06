@@ -6,3 +6,7 @@ ny <- left_join(ny.warwork.regions,ny.warwork.womenemployed, by="region_number")
 ny %>% arrange(desc(women_employed)) %>%
     head(5)
 
+## paste from ws 5
+gayguides %>% 
+  group_by(state,Year) %>%
+  summarize(count n =())

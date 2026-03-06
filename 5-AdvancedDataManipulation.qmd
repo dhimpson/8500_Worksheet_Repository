@@ -60,12 +60,11 @@ BostonWomenVoters %>%
 **Note:** The `na.rm = TRUE` argument tells R to remove NA values before calculating. This is important when working with historical data that may have missing values.
 
 (@) You try, use group_by and summarize to find the total number of locations in each state, each year.
-```{r}
-## not sure if you wanted BostonWomenVoters data here, it looked like it did not have a specific state column,but the gayguides did?? Getting a "unexpected symbol warning"
-gayguides %>% 
-  group_by(state,Year) %>%
-  summarize(count n =())
-```
+```{r} 
+BostonWomenVoters %>%
+  group_by(Occupation)
+``` ## come back to this. what dataset to use. BWV does not seem to make sense here.
+
 
 (@) Summarize can do more than just count rows. Can you use `summarize()` to find the average age for each occupation in the Boston Women Voters data?
 ```{r}
@@ -105,10 +104,19 @@ gayguides %>%
   slice_max(total_bars, n = 1)
 ```## CA has the most bars, 5490
 
+
 (@) Filter the dataset for only the values in the southernstates list (created in the block below). Then tell me, how many locations were in all the southern states in 1975?
 ```{r}
 southernstates <- c("AL", "AR", "FL", "GA", "KY", "LA", "MD", "MS", "NC", "SC", "TN", "TX", "VI", "WV")
 
+gayguides %>%
+  group_by(state,type) %>%
+  summarize(count = n(), .groups = "drop") %>%
+  filter(type %in% c("Bars","Bars/Clubs")) %>%
+  group_by(southernstates) %>%
+  summarize(count = n(, .groups = "drop"))%>%
+  filter(Year = 1975)
+## filter by state (southernstates)
 ```
 
 
@@ -136,6 +144,15 @@ head(almshouse_admissions)
 (@) Below I've downloaded data about each of the census regions. Join this dataset with `gayguides`. Create a data frame that includes each of the regions and the total number of locations in 1980. How many locations appear in the Mountain region in 1980?
 ```{r}
 regions <- read.csv("https://raw.githubusercontent.com/regan008/DigitalMethodsData/main/raw/censusregions.csv")
+new_regions <- gayguides %>% 
+  left_join(regions, by= c("state" = "State.Code"))
+
+regions_in_1980 <- new_regions %>%
+  filter(Year == 1980) %>%
+  group_by("regions") %>%
+  summarize(total_locations =n())
+  
+## somewhere I missed getting 'regions' included in my regions_in_1980 dataset. not sure this works.
 ```
 
 (@) Explain what you did above. What variable did you join by and why? What results?
@@ -177,7 +194,8 @@ sc.parks %>%
 (@) Widen the `sc.parks` dataset so that the column names are drawn from the type of recreation worker.
 ```{r}
 
-```
+```## use the pivot.longer dataset count is the same. instead of year being the the value...
+
 
 (@) Turn `rec.spaces` into a wide dataframe. 
 ```{r}
