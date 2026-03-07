@@ -265,9 +265,9 @@ BostonWomenVoters %>%
 ```
 
 (@) What are the three most common occupations?
-Housewife, "At home", "Housekeeper" (which all sound similar)- maybe it should be Housewife, Housekeeper, Clerk?
 
->
+
+>Housewife, "At home", "Housekeeper" (which all sound similar)- maybe it should be Housewife, Housekeeper, Clerk?
 
 ### `fct_lump()` - Combining Small Categories
 
@@ -346,9 +346,7 @@ BostonWomenVoters %>%
         "Tel. operator" = "Telephone Operator",
         "bookkeeper" = "Bookkeeper"
       )
-    ) %>%
-    count(More.Occupation_clean) %>%
-    arrange(desc(n))
+    ) 
     ## this did not seem to work
 ```
 
@@ -407,9 +405,23 @@ Now when you use this factor in a plot or table, it will appear in this conceptu
 
 (@) Create occupation categories and relevel them in an order that makes sense historically. Explain why you chose this order.
 ```{r}
+BostonWomenVoters %>%
+  mutate(
+    occupation_category = fct_collapse(Occupation,
+      "Skilled Trade" = c("Watchmaker","Book binder","Book Binder", "Bookbinder", "Bookbindery","Jeweler","Jeweller"),
+      "Education" = c("Teacher", "Governess", "Governess "),
+      "Medical" = c("Nurse", "Dental assistant","Dental asst.", "Dentist", "Dermatologist (General)"),
+      "Government Employed" = c("U.S. Dep't Collection", "Traffic Clerk", "Civil service clerk","Dep. Collections U.S. Internal Revenue"),
+      "Cultural Engagement" = c("Violinist", "Artist", "Vocal Instructor", "Vaudeville", "Writer")
+    )
+    occupation_category = fct_relevel(occupation_category, 
+                                     "Skilled Trade", "Education", "Medical", "Government Employed","Cultural Engagement")
+  ) %>%
+    pull(occupation_category) %>%
+  levels()          ## lots of errors about unexpected symbols???                      
 ```
 
-> Explanation:
+> Explanation: I chose these occupation categories because I think it would be interesting to see the voting data for young professional women compared within their different fields. How does those employed by the government compare to clerical workers, those who work in communications, and those who are employed within jobs of cultural engagements. I also would be interested in joining this data with the average voting age of each group. I think this information could give a more complete view of women who were interested in the sufferagist movements in the early twentieth century. 
 
 
 ## Working with Dates using `lubridate`
@@ -436,7 +448,8 @@ These all create "Date" objects that R knows how to work with.
 
 (@) Create a vector of dates in different formats and parse them using the appropriate lubridate functions.
 ```{r}
-```
+dates_demo <- c(12/05/2020, 1997-06-06, 29-08-1967)
+``` ## need to parse- check stack overflow and book
 
 ### Creating Date Columns
 
