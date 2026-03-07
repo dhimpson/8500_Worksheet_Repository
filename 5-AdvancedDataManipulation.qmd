@@ -244,11 +244,15 @@ levels(BostonWomenVoters$Occupation)
 
 (@) How many different occupations are there?
 
->
+>It looks like there are 1137 different occupations, however I noticed that several of the same occupations are listed mutliple times, either spelled differently, with capitalization differences, or plural endings.
 
 (@) Look at the levels. Do you notice any that could be combined or standardized? List a few examples.
 
->
+> Yes. As mentioned above, there are duplicates with variations in spelling/misspelling/captialization errors, and leading/trailing spaces see the below for the example of "waitress":
+"Waitres"                                    
+"waitress"                                   
+"Waitress"                                   
+"Waitress " 
 
 ### `fct_count()` - Counting Factor Levels
 
@@ -261,6 +265,7 @@ BostonWomenVoters %>%
 ```
 
 (@) What are the three most common occupations?
+Housewife, "At home", "Housekeeper" (which all sound similar)- maybe it should be Housewife, Housekeeper, Clerk?
 
 >
 
@@ -274,11 +279,17 @@ BostonWomenVoters %>%
   arrange(desc(n))
 ```
 
+
 This kept the 5 most common occupations and combined everything else into "Other".
 
 (@) Use `fct_lump()` to keep the top 10 occupations. How many voters are in the "Other" category?
 ```{r}
+BostonWomenVoters %>%
+  mutate(occupation_lumped = fct_lump(Occupation, n = 10)) %>%
+  count(occupation_lumped) %>%
+  arrange(desc(n))
 ```
+## there are 4759 voters in the "other" category
 
 ### `fct_reorder()` - Reordering by Another Variable
 
@@ -304,7 +315,7 @@ BostonWomenVoters %>%
 
 (@) Which occupations have the youngest average age? Which have the oldest? What might this tell us historically?
 
->
+>The occupations with the youngest average age are cashier, clerk, and bookkeeper. Young women who were seen as young professionals were interested in voting and in pursuing a career outside of the home.
 
 ### `fct_recode()` - Renaming Factor Levels
 
@@ -324,6 +335,21 @@ BWV.occupations <- BostonWomenVoters %>%
 
 (@) Look at the occupation levels. Find at least 3 more occupations that could be recoded to be more standardized or descriptive. Create a new column with your recoded occupations.
 ```{r}
+More.BWV.occupations <- 
+BostonWomenVoters %>%
+    mutate(
+      More.Occupation_clean = fct_recode(Occupation,
+        "housewife" = "Housewife",
+        "H.W." = "Housewife",
+        "Married Housewife" = "Housewife",
+        "housewife, married" = "Housewife",
+        "Tel. operator" = "Telephone Operator",
+        "bookkeeper" = "Bookkeeper"
+      )
+    ) %>%
+    count(More.Occupation_clean) %>%
+    arrange(desc(n))
+    ## this did not seem to work
 ```
 
 ### `fct_collapse()` - Combining Multiple Levels into Categories
@@ -347,9 +373,16 @@ Note that this dataset is still really long. We'd have to add all the categories
 
 (@) Create your own categorization scheme for occupations. Combine related occupations into 5-7 broader categories that make historical sense. Consider categories like professional, domestic, skilled labor, etc. Explain your reasoning.
 ```{r}
+broad_occupation_categories <- BostonWomenVoters %>%
+  mutate(
+    occupation_category = fct_collapse(Occupation,
+    "Domestic Work" = c("Housewife", "At Home", "Housekeeper","Laundress"),"Medical" = c("Nurse","Graduate Nurse", "Physician","Trained Nurse","Pupil nurse"),"Artist" = c("Musician", "Artist"), "Communications" = c("Operator", "telephone operator", "Tel.operator","Telephone operator", "Telegrapher"),"Finance" = c("Bank clerk", "Bank Clerk", "Accountant","Auditor"),"Management" = c("Supervisor", "Storekeeper", "Manager","Inspector"))) %>%
+  count(occupation_category) %>%
+  arrange(desc(n))
 ```
 
-> Explain your reasoning. 
+> Explain your reasoning.
+### don't forget to explain why i grouped things like this 
 
 ### `fct_relevel()` - Manual Reordering
 
