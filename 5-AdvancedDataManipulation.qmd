@@ -9,7 +9,7 @@ _This is the fifth in a series of worksheets for History 8500 at Clemson Univers
 Last week you learned the basic dplyr verbs for data manipulation. This week we'll build on those skills with more advanced techniques: grouping data in complex ways, working with categorical data using factors, joining datasets together, and reshaping data between wide and long formats.
 
 ```{r}
-library(DigitalMethodsData)
+
 library(tidyverse)
 data("gayguides")
 data("BostonWomenVoters")
@@ -553,11 +553,17 @@ year_month <- ymd(paste0("1920-06", "-01"))
 
 (@) Some historical records might only have a year. Create a function that takes a year and returns a date object for January 1st of that year. Test it with several years.
 ```{r}
+January_Dates <- function(year_imput) {
+  make_date(year = year_imput, month = 1, day =1)
+}
+January_Dates(1967)
+January_Dates(1989)
+January_Dates(1899)
 ```
 
 (@) Reflect: What challenges might you encounter when working with dates in historical sources? How might `lubridate` help address some of these challenges?
 
->
+> ## answer this 
 
 ## Putting it all together
 Each of the functions covered in this worksheet and in last week's worksheet are valuable tools for manipulating datasets. But they are more powerful when combined. When using them to pair down a dataset, we are asking and answering a question. For example in this code from earlier in our worksheet:
@@ -569,9 +575,12 @@ gayguides %>%
 ```
 The implicit question was, "How many locations appear in each year?". The `judges` dataset in provided in the DigitalMethodsData package is a large, messy, wide dataframe that contains a lot of information. Look at this dataframe and then compose a question to ask of the data.
 
-(@) First, tell me, what is the question you are asking? 
+(@) First, tell me, what is the question you are asking? ## How many judges were women? 
 ```{r}
-
+data("judges")
+head(judges)
+View(judges)
+## How many judges were women? 
 ```
 
 (@) Now write some code to address that question. Comment the code with notes that explain your thinking as you go. Use functions like select(), filter(), etc to pair down your dataset and reshape it to address your question. 
