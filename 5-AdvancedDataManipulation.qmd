@@ -448,8 +448,9 @@ These all create "Date" objects that R knows how to work with.
 
 (@) Create a vector of dates in different formats and parse them using the appropriate lubridate functions.
 ```{r}
-dates_demo <- c(12/05/2020, 1997-06-06, 29-08-1967)
-``` ## need to parse- check stack overflow and book
+dates_demo <- c("12/05/2020", "1997-06-06", "29-08-1967") %>%
+  parse_date_time(c(dates_demo), "dmy")
+``` ## this does not work... look up in book or stackoverflow
 
 ### Creating Date Columns
 
@@ -466,6 +467,8 @@ events %>%
 
 (@) The `gayguides` data has a Year column but no full dates. Create a date column assuming all entries are from January 1st of that year. (Hint: use `paste()` to create a string like "1970-01-01", then parse it)
 ```{r}
+gayguides %>% 
+  mutate ()
 ```
 
 ### Extracting Components from Dates
