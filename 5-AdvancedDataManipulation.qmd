@@ -580,22 +580,31 @@ The implicit question was, "How many locations appear in each year?". The `judge
 data("judges")
 head(judges)
 View(judges)
-## How many judges were women? 
+## How many judges were women? When were they confirmed?
 ```
 
 (@) Now write some code to address that question. Comment the code with notes that explain your thinking as you go. Use functions like select(), filter(), etc to pair down your dataset and reshape it to address your question. 
 ```{r}
-
+Female_Judges <- judges %>% ## First I set up a dataframe for Female Judges. This way I can check to see if the code actually works.
+    filter(Gender == "Female") %>% ##used Filter to remove any male judges from the data.
+    mutate(new_confirm = ymd(`Confirmation.Date..1`),
+      Decade = (year(`Confirmation.Date..1`) %/% 10) *10) ## I keep getting errors re: Confirmation Date
 ```
 
 (@) Now ask a question of the `gayguides` data (or another dataset of your choice). What is the question you are asking? 
 ```{r}
-
+## How many locations were in the Bible Belt (AL,AR,GA,KY,LA,MS,NC,OK,SC,TN) in the 1980s?
 ```
 
 (@) Now write some code to address that question. Comment the code with notes that explain your thinking as you go. Use functions like select(), filter(), etc to pair down your dataset and reshape it to address your question. 
 ```{r}
+BB_states <- c("AL","AR","GA","KY","LA","MS","NC","OK","SC","TN") ##First, I created my Bible Belt states variable
 
+Bible_Belt_locals <- gayguides %>%
+  filter(state %in% BB_states, year >= 1980 & year<= 1989) %>% ##Filtered to get the states that I wanted and the decade of the 80s. This info is then sent to be grouped by state and year
+  group_by(state, year) %>%
+  summarize(location_count = n()), .groups ='drop'## dropped any empty values
+  nrow(Bible_Belt_locals)## gives the count of 60698 locations in the Bible Belt states in the 1980s
 ```
 
 (@) Write a function that filters the gay guides dataset. It should accept 2 arguments: year and state. When passed to the function the function should return only the title, type, state and year for each entry. 

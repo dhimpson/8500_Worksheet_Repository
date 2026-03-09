@@ -10,3 +10,4 @@ ny %>% arrange(desc(women_employed)) %>%
 gayguides %>% 
   group_by(state,Year) %>%
   summarize(count n =())
+select(Gender, Confirmation.Date..1.) %>% ## used select to gather information about confirmation dates of these female judges.
