@@ -450,7 +450,8 @@ These all create "Date" objects that R knows how to work with.
 ```{r}
 dates_demo <- c("12/05/2020", "1997-06-06", "29-08-1967") %>%
   parse_date_time(c(dates_demo), "dmy")
-``` ## this does not work... look up in book or stackoverflow
+``` 
+
 
 ### Creating Date Columns
 
@@ -536,7 +537,7 @@ ggint_60s <- interval(ymd("1960-01-01")), ymd("1969-12-31")
 ggint_70s <- interval(ymd("1970-01-01")), ymd("1979-12-31")
 ggint_80s <- interval(ymd("1980-01-01")), ymd("1989-12-31")
 
-```##???????
+```##Not sure what to do for the second part of this question.
 
 ### Handling Historical Dates
 
@@ -563,7 +564,7 @@ January_Dates(1899)
 
 (@) Reflect: What challenges might you encounter when working with dates in historical sources? How might `lubridate` help address some of these challenges?
 
-> ## answer this 
+> ## Dates with mismatched data (dmy and ymd) can be tidied to one standard date format, dates can also be rounded to nearest decade. These things help to make a messy data set more useful.
 
 ## Putting it all together
 Each of the functions covered in this worksheet and in last week's worksheet are valuable tools for manipulating datasets. But they are more powerful when combined. When using them to pair down a dataset, we are asking and answering a question. For example in this code from earlier in our worksheet:
@@ -609,6 +610,12 @@ Bible_Belt_locals <- gayguides %>%
 
 (@) Write a function that filters the gay guides dataset. It should accept 2 arguments: year and state. When passed to the function the function should return only the title, type, state and year for each entry. 
 ```{r}
+gg_filter <- function(target_year,target_state) {
+  gayguides %>% 
+  filter(Year == target_year, state == target_state) %>%
+  select(title, type, state, year)
+}
+
 
 ```
 
