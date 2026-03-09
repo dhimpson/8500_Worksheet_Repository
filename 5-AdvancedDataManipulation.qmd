@@ -448,8 +448,8 @@ These all create "Date" objects that R knows how to work with.
 
 (@) Create a vector of dates in different formats and parse them using the appropriate lubridate functions.
 ```{r}
-dates_demo <- c("12/05/2020", "1997-06-06", "29-08-1967") %>%
-  parse_date_time(c(dates_demo), "dmy")
+dates_demo <- c("12/05/2020", "1997-06-06", "29-08-1967")
+  parse_date_time<- mdy(dates_demo)
 ``` 
 
 

@@ -176,4 +176,5 @@ bwv.occupation <- function(Occupation) {
   # 3. Return AFTER loop completes
   return(result)
 }
-## class notes March 2
+## class notes March 9: Co-pilot
+
