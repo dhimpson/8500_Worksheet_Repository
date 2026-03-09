@@ -1,7 +1,7 @@
 ---
 title: 'Worksheet 5: Advanced Data Manipulation'
 author: "Dori Impson"
-date: "March 2, 2026"
+date: "March 9, 2026"
 ---
 
 _This is the fifth in a series of worksheets for History 8500 at Clemson University. The goal of these worksheets is simple: practice, practice, practice. The worksheet introduces concepts and techniques and includes prompts for you to practice in this interactive document. When you are finished, you should change the author name (above), commit your changes, push to GitHub, and submit the link to your worksheet repository on Canvas. Don't forget to commit your changes as you go - you should make multiple commits as you work through the worksheet, not just one at the end. Also, remember to update your learning log in the `logs/` folder of your repository as you work through the assignment._
