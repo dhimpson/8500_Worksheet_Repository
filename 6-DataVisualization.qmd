@@ -28,6 +28,7 @@ library(gapminder) #this is a dataset
 library(ggplot2) 
 library(tidyverse)
 library(DigitalMethodsData)
+data(package = "DigitalMethodsData")
 ```
 To begin, we're going to use one of R's built in datasets. First lets take a look at the data: 
 ```{r}
@@ -110,6 +111,7 @@ ggplot(recreational.data, aes(x = population)) +
 ```{r}
 
 ```
+
 
 (@) By default, `geom_histogram()` is choosing the number of bins. Can you change the number of bins or the bin width? (Hint: How might you look up the options for this function?)
 ```{r}
