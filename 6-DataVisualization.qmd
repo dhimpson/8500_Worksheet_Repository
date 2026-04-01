@@ -157,10 +157,19 @@ ggplot(gg_religion_state, aes (x = state, y = count))+
 ## First, I used View(gayguides) and unique(gayguides$type) to see how potential religious institutions were listed in the type column of the data. I had my | opperator in between "" in the string and that caused issues. 
 (@) Formulate a question based on a dataset of your choice. That question should be something that would be appropriately answered by a bar chart. What is the question you want to explore?
 
-<
+<What was the life expectancy of Afganistan by decade in the 1950s, 1960s, 1970s, 1980s, 1990, 2000s?
 
 (@) Now write the code to answer that question and use comments (`#`) to explain your thinking as you go.
 ```{r}
+Afganistan_lifeExp <- gapminder %>% filter(country == "Afghanistan") %>%
+## first will create a variable to use later in my ggplot. I filtered the gapminder dataset by country.
+mutate(decade = floor(year / 10)* 10) %>% ## this step will add a new column to the data set that will divide the data into decades. Next I am taking that info and grouping by decade.
+group_by(decade) %>% ## then I am passing this info onto the summarize function and asking it to get a mean for each decade
+summarize(mean = mean(lifeExp)) ##I paused and ran my code to see if it worked.
+
+ggplot(Afganistan_lifeExp, aes(x= decade, y= avg_lifeExp))+
+  geom_col()
+  ##I ran this code and got an empty plot. I had spelled Afghanistan wrong at the begining and had to fix that to get things to work. 
 
 ```
 
