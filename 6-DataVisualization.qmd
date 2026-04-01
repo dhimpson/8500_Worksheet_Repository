@@ -1,7 +1,7 @@
 ---
 title: 'Worksheet 4: Data Visualization'
-author: ""
-date: ""
+author: "Dori Impson"
+date: "April 1, 2026"
 ---
 
 _This is the fourth in a series of worksheets for History 8500 at Clemson University. The goal of these worksheets is simple: practice, practice, practice. The worksheet introduces concepts and techniques and includes prompts for you to practice in this interactive document. When you are finished, you should change the author name (above), render your document to a pdf, and upload it to canvas. Don't forget to commit your changes as you go and push to github when you finish the worksheet._
@@ -20,7 +20,7 @@ Any type of plot in R has 3 necessary layers.
 
 **2) Aesthetic:** A mapping of one or more variables to one or more visual elements on the graph. For example, you could map a variable to the x-axis, another variable to the y-axis, and a categorical variable to color so that different categories get plotted with different colors.
 
-**3) Geometry:** The type or shape of the visual elements on the graph. For example, this could be a point in the case of a scatter plot, a bar in the case of a bar plot, or a line in the case of a line plot.
+**3) Geometry:** The type or shape of the visual elementsq on the graph. For example, this could be a point in the case of a scatter plot, a bar in the case of a bar plot, or a line in the case of a line plot.
 
 Lets load all the libraries we'll use in this worksheet: 
 ```{r message=FALSE, warning=FALSE}
