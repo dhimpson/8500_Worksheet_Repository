@@ -212,8 +212,8 @@ ggplot(gg.byyear, aes(x = Year, y = count)) +
 
 (@) Using the state recreation data, can you create a chart that outlines the total expenditures in South Carolina by city?
 ```{r}
-
-```
+SC_rec_spending <- 
+```### start here
 
 (@) Using the gayguides data can you select 5 types of locations and chart the number of each type between 1965 and 1980? 
 ```{r}
