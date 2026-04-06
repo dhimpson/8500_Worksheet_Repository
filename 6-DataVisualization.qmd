@@ -215,8 +215,9 @@ ggplot(gg.byyear, aes(x = Year, y = count)) +
 SC_rec_spending <- rec %>% filter(state == "SC") %>% group_by(city) %>% summarize(total_exp = sum(total_expenditures))
 
 ggplot(SC_rec_spending, aes(x = city, y = total_exp)) +
-  geom_col()
-``` ### might want to facet wrap
+  geom_col() + facet_wrap(~city)
+``` 
+
 
 (@) Using the gayguides data can you select 5 types of locations and chart the number of each type between 1965 and 1980? 
 ```{r}
@@ -225,15 +226,30 @@ gg_local_types <- gayguides %>%filter(between(Year, 1965,1980)) %>%
  group_by(type) %>%
  summarize(count = n())
 
-ggplot(gg_local_types, aes(x = type, y = ))
-```### finish this...
+ggplot(gg_local_types, aes(x = type, y = count)) +
+  geom_col() +
+  facet_wrap(~type)
+```
 
 (@) Using this recreation dataset from last week, can you find the average number of volunteer and paid workers over time? 
 ```{r}
 rec.workers <- read.csv("https://raw.githubusercontent.com/regan008/DigitalMethodsData/main/raw/RecreationData-Wide.csv")
 
-## this one the year needs to be mutated with gsub to get rid of x in the year.
+colnames(rec.workers) <- gsub("X", "", colnames(rec.workers))
+## As noted in class, I used gsub() to get rid of X in the year columns first.
+rec.workers.long <- rec.workers %>% 
+  pivot_longer(cols = -c(city, type_of_worker), names_to = "year", values_to = "workers")
+## used pivot_longer() so that the wide year format were converted into a long format that should work better for ggplot. 
+avg_workers <- rec.workers.long %>% group_by(year, type_of_worker) %>% summarize(avg_workers = mean(workers, na.rm = TRUE)) ## this calculates average workers by year and by type (not sure this step is correct)
+
+ggplot(avg_workers, aes(x = year, y = avg_workers, color = type_of_worker, group = type_of_worker)) + 
+geom_line () + 
+geom_point() + 
+labs(x = "Year", y = "Average Number of Workers", 
+       title = "Average Volunteer and Paid Workers Over Time",
+       color = "Worker Type")
 ```
+## I had a lot of help from Claude with this one. I do not like the visualization and I think something went wrong somewhere, but I do not know where. I made notes as I went because I kept getting lost in the process. 
 
 ### Practice
 In the slots below use the datasets for class (or a dataset of your choice) to create a plot. The plot you create in each of these three examples should try to make some kind of historical observation. After you finish creating the plot, write a short paragraph that explains what kind of observation you were trying to make and what your plot demonstrates. 
