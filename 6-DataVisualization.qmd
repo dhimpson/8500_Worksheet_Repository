@@ -25,7 +25,7 @@ Any type of plot in R has 3 necessary layers.
 Lets load all the libraries we'll use in this worksheet: 
 ```{r message=FALSE, warning=FALSE}
 library(gapminder) #this is a dataset
-library(ggplot2) 
+library(ggplot2)
 library(tidyverse)
 library(DigitalMethodsData)
 data(package = "DigitalMethodsData")
@@ -194,7 +194,7 @@ ggplot(gg_religion_time, aes(x = Year, y = count))+
 (@) In the gayguides data, danger or risk is indicated in several different ways. Sometimes it through the use of an amenity categorization of (HOT) or (AYOR) which meant that these locations were frequented by police and should be used at your own risk. Other times, locations were listed as "inquire locally" in either the description or address field. There are many reasons a location would have requested to have been listed this way. Many times, it was due to harassment and the location deemed it too dangerous to publicly list its location. Can you create a subset of the gay guides data about risk and then use it to create a chart about the usage of these indicators over time? 
 ```{r}
 gg_risks <- gayguides %>% filter(grepl("HOT|AYOR|inquire locally", amenityfeatures)) %>% group_by(Year) %>% summarize(count = n())
-
+## need to add where address has "inquire locally". Year on x, coutn on side, use line graph... do  Hot| AYOR first then do an second grepl for aminty features.
 ggplot(gg_risks, aes(x= Year, y= count))+
   geom_line()
 ```
@@ -212,19 +212,27 @@ ggplot(gg.byyear, aes(x = Year, y = count)) +
 
 (@) Using the state recreation data, can you create a chart that outlines the total expenditures in South Carolina by city?
 ```{r}
-SC_rec_spending <- 
-```### start here
+SC_rec_spending <- rec %>% filter(state == "SC") %>% group_by(city) %>% summarize(total_exp = sum(total_expenditures))
+
+ggplot(SC_rec_spending, aes(x = city, y = total_exp)) +
+  geom_col()
+``` ### might want to facet wrap
 
 (@) Using the gayguides data can you select 5 types of locations and chart the number of each type between 1965 and 1980? 
 ```{r}
+gg_local_types <- gayguides %>%filter(between(Year, 1965,1980)) %>%
+ filter(type %in% c("Cruising Areas","Book Store","Bars/Clubs", "Book Store", "Hotel")) %>% 
+ group_by(type) %>%
+ summarize(count = n())
 
-```
+ggplot(gg_local_types, aes(x = type, y = ))
+```### finish this...
 
 (@) Using this recreation dataset from last week, can you find the average number of volunteer and paid workers over time? 
 ```{r}
 rec.workers <- read.csv("https://raw.githubusercontent.com/regan008/DigitalMethodsData/main/raw/RecreationData-Wide.csv")
 
-
+## this one the year needs to be mutated with gsub to get rid of x in the year.
 ```
 
 ### Practice
@@ -232,25 +240,40 @@ In the slots below use the datasets for class (or a dataset of your choice) to c
 
 (@) Plot 1
 ```{r}
+Gville_gg_locations <- gayguides %>% mutate(decade = floor(Year / 10) * 10) %>% filter(state == "SC", city %in% c("Greenville",  "Spartanburg")) %>% group_by(decade) %>% summarize(count = n())
 
+ggplot(Gville_gg_locations, aes(x = decade, y = count)) +
+  geom_col()+
+  labs(x = "Decade", y = "Number of Locations", title = "Gay Guides Locations in Greenville and Spartanburg")
 ```
 
 (@) Plot 1 explanation: 
->
+> I wanted to explore the total number of locations in the gayguides data for Greenville, South Carolina by decade. My original thought was to see if the location totals dropped as church denominations like Southern Baptists pushed an anti-gay agenda within the upstate of South Carolina through the 1980s and 1990s. I decided to include Spartanburg in the data because of its proximity to Greenville and its similar religious culture. My bar chart shows that the number of locations actually grew through the 1980s, in spite of an increase in anti-gay rhetoric from religious institutions in these two cities.
 
 (@) Plot 2
 ```{r}
+data(charlestonManumissions)
+top_motives <- charlestonManumissions %>% group_by(Motive) %>% summarize(count = n()) %>% arrange(desc(count)) %>% head(3)
 
+ggplot(top_motives, aes(x = Motive, y = count)) +
+  geom_col() +
+  labs(x = "Motive for Manumission", y = "Number of Manumissions", title = "Top Motives for Manumission in Charleston")
 ```
 
 (@) Plot 2 explanation: 
->
+> The Charleston Manumissions dataset presents interesting information about enslaved people who gained freedom. I noticed that the Motive column contained many different reasons for obtaining freedom. I wanted to know what the top three reasons were and this code (and chart) presents that information clearly. 
 
 (@) Plot 3. For this one, try a different kind of plot. [Check out a useful gallery here.](https://github.com/regan008/DigitalMethodsData/blob/main/raw/RecreationData-Wide.csv)
 (For this week, avoid choosing a map. We'll talk more about maps and geographic data over the next two weeks.)
 ```{r}
+judges_race_birth <- judges %>% filter(Race.or.Ethnicity != "White", !is.na(Race.or.Ethnicity), !is.na(Gender))
 
+ggplot(judges_race_birth, aes(x = Race.or.Ethnicity, fill = Gender)) +
+  geom_bar(position = "dodge") +
+  labs(x = "Race/Ethnicity", y = "Count", 
+       title = "Non-White Judges by Race/Ethnicity and Gender") + 
+  coord_flip()
 ```
 
 (@) Plot 3 explanation: 
->
+> I wanted to use the judges dataset to see what a side by side comparison would look like of minority judges by gender. This chart provides a glimpse of this comparison and shows that the highest amount of non-white judges for both genders was African Americans, followed by Hispanic and Asian Americans.
