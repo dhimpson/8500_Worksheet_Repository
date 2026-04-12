@@ -200,7 +200,21 @@ tidy_sotu <- sotu_whole %>%
 ```
 (@) Before we move forward, take a minute a describe the chunk of code you just ran. What does each section do and how does it reflect the workflow for a topic modeling project? What are the important steps that are unique to topic modeling? 
 
->
+>meta <- as.data.frame(sotu_meta)##this created a new variable that presents the sotu_meta data as as dataframe. Doing so allows for tidy orginalization of data into rows and columns with one entity in each cell.
+file_paths <- sotu_dir(dir = "sotu_files")## this step creates a directory called sotu_dir. The creation of a directory provides the framework for the organization and tidying of data.
+sotu_texts <- readtext(file_paths) ## this step loads the text files created in the previous step into R and provides two columns, one with the text and one with an accompaning doc_id. The doc_id will allow for future joining of datasets if needed. 
+sotu_whole <-  
+  sotu_meta %>%  
+  arrange(president) %>% # sort metadata
+  bind_cols(sotu_texts) %>% # combine with texts
+  as_tibble()
+  ## these steps create a new variable from the sotu_meta dataframe with has been sorted by president and then joined with the sotu_texts dataframe. They have been joined by doc_id. The new variable which is called sotu_whole is then presented as a tibble which provides an easy way to check and make sure there are not mistakes in the code.
+   
+
+tidy_sotu <- sotu_whole %>%
+  unnest_tokens(word, text) %>% 
+  anti_join(stop_words)
+  ## A new variable called tidy_sotu is created from the sotu_whole dataframe which has been passed to the unnest_token function and sorted by word and text columns. This information is then passed onto the anti_join function which applies the stop_word list to the corpus. This entire block of code yields a dataset the is tidy, organized by doc_id and rid of unwanted items (punctuation and stop words). The tidy_sotu dataframe is now ready to apply topic modeling.
 
 
 The most basic kind of analysis we might be interested in doing is counting words. We can do that easily using the `count()` function: 
