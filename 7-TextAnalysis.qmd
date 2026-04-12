@@ -253,13 +253,30 @@ sotu.length <- tidy_sotu %>%
 
 (@) Think back to the metadata that we loaded about these speeches. Why are the STOU addresses for more modern president's shorter than others? (For example Bush vs Teddy Roosevelt.) What about the presidency, and the State of the Union tradition, changed that would account for this? 
 
->
+> The advent of television and internet has most likely changed the modern president's length of speech for the State of the Union address. The speech is now presented on primetime television and there are expectations that it will fill a certain timeslot in programming. 
 
 (@) Filter the dataset to address this discrepancy and the recreate these statistics: 
 ```{r}
+sotu.length.radio <- tidy_sotu %>%
+  filter(year >= 1923 & year <= 1946) %>%
+  count(president, doc_id) %>% 
+  group_by(president) %>% 
+  summarize(avg_words = mean(n)) %>% 
+  arrange(desc(avg_words))
 
+  sotu.length.radio %>% print(n = Inf)
+  ## based on this, I cannot necessarily argue that radio made a huge difference in the length of the SOTU speeches. There does not seem to be a growing pattern as radios became more popular. Next we will look a TV.
+ 
+ sotu.length.television <- tidy_sotu %>%
+  filter(year >= 1947 & year <= 2021) %>%
+  count(president, doc_id) %>% 
+  group_by(president) %>% 
+  summarize(avg_words = mean(n)) %>% 
+  arrange(desc(avg_words))
+
+  sotu.length.television %>% print(n = Inf)
 ```
-
+## comparing the lengths of early modern presidents' SOTU  to those with radio and television capablities shows that on the whole, the advent of technology seemed to shorten the average length of SOTU speeches. The limitations placed upon airtime and the addition most likely led to shorter speeches. 
 ### Term Frequency
 Often, the raw frequency of a term is not as useful as relative frequency. In other words, how often that word appears relative to the total number of words in a text. This ratio is called **term frequency**. 
 
