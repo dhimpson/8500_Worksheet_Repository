@@ -1,7 +1,7 @@
 ---
 title: 'Worksheet 5: Text Analysis'
-author: ''
-date: ''
+author: 'Dora Impson'
+date: 'April 6 - 13'
 ---
 
 _This is the seventh in a series of worksheets for History 8500 at Clemson University. The goal of these worksheets is simple: practice, practice, practice. The worksheet introduces concepts and techniques and includes prompts for you to practice in this interactive document. When you are finished, you should change the author name (above), commit your changes, push to GitHub, and submit the link to your worksheet repository on Canvas. Don't forget to commit your changes as you go - you should make multiple commits as you work through the worksheet, not just one at the end. Also, remember to update your learning log in the `logs/` folder of your repository as you work through the assignment._
@@ -32,6 +32,7 @@ library(SnowballC)
 
 First, lets install the State of the Union package. This package contains text of all the state of the Union addresses from Washington to Trump. Run `install.packages` to install the `sotu` package. 
 ```{r}
+install.packages("sotu")
 library(sotu)
 ```
 
@@ -69,11 +70,11 @@ Now our textual data is loaded into R but the textual data and the metadata are 
 sotu_whole <- 
   sotu_meta %>%  
   arrange(president) %>% # sort metadata
-  bind_cols(sotu_texts) %>% # combine with texts
+  bind_cols(sotu_texts) %>% # pastes the to "spreadsheets" together horizontally- they have to have the same amount rows
   as_tibble() # convert to tibble for better screen viewing
-
+## dhi note to self- notice doc.id is same on sotu_texts and sotu_whole. Also note- this is not the ideal way to do this- should use left_join() with doc.id
 glimpse(sotu_whole)
-```
+``` 
 
 Now our data is loaded into R and its ready to be pre-processed. 
 
@@ -102,7 +103,10 @@ The function `unnest_tokens()` also has an option called token. Tokenizing by wo
 
 (@)Use the documentation to tokenize the dataset into sentences: 
 ```{r}
+tidy_sotu_sentences <- tidy_sotu %>%
+  unnest_tokens(output = "sentence", input = "word", token = "sentences")
 
+tidy_sotu_sentences
 ```
 
 We've talked about n-grams loosely in class. But lets define it more formally. An n-gram is a contiguous sequence of n items from a given sample of text or speech. The n stands for the number of items. So for example, a bi-gram is sets of two words. 
@@ -123,9 +127,12 @@ sotu_bigrams <- sotu_whole %>%
 head(sotu_bigrams$bigram)
 ```
 
-(@) Use `unest_tokens()` to create tri-grams. 
+(@) Use `unnest_tokens()` to create tri-grams. 
 ```{r}
+sotu_trigrams <- sotu_whole %>%
+  unnest_tokens(trigram, text, token = "ngrams", n = 3)
 
+head(sotu_trigrams$trigram)
 ```
 
 ### Stopwords
@@ -266,8 +273,23 @@ tidy_sotu %>%
 ```
 (@) The code above is commented to help you follow it. Walk through the code above, and explain what each line does in your own words. If its a function you are unfamiliar with, look up the documentation.
 
-> 
+> tidy_sotu %>% ## take the tidy_sotu dataset and pass it to count()
+  count(president, word)  %>%  ## This line provides a count for each word broken down by president. So, all the times that "senate" appears will be grouped by President (jefferson, lincoln etc.) It will then pass this info via the pipe operator to the next line.
 
+  group_by(president) %>% ## groups all the info recieved by president. Passes the information on to the next line via pipe
+
+  mutate(n_tot = sum(n),
+    term_freq = n/n_tot) %>% 
+    
+    ## takes the info from the group_by() and makes a new column in the dataset which gives the total sum of words by president. This also creates a function for the frequency terms appear and sets the frequency with the ratio of n (count of words) divided by total number of words. 
+
+          
+  arrange(desc(term_freq)) %>% 
+  ## sorts the infomation from the new n_tot column by term frequency. Passes this data onto next step via pipe.
+
+  top_n(1) %>%  # take the top for each president
+  print(n = Inf) # print all rows
+*** start here***
 ### TF-IDF
 
 The above measures the frequency of terms within individual documents. But what if we know about words that seem more important based on the contents of the **entire** corpus? That is where tf-idf or term-frequency according to inverse document frequency comes in. 
