@@ -499,7 +499,7 @@ progressive_era_tfidf %>%
 progressive_era_tfidf %>%
   filter(idf > 0) %>%
   arrange(desc(tf_idf))
-  #this did not work and I am not sure why.
+  #this did not work and I am not sure why.I could modify my stopword list to include "physical" and "left", both of which show up frequently and do not add value to the overall tf-idf score.
 ```
 
 
