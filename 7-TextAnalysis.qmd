@@ -387,7 +387,7 @@ head(cleveland_tfidf)
 
 (@) What does a high tf-idf score tell us historically? Think about what it means when a word has a high score versus a low score. Why might a word like "watergate" have a very high tf-idf score in Nixon's speeches but a word like "government" has a low score even though it appears frequently? How might you apply this in your own research? What words would you expect to see with high and low scores?
 
->## start here
+>## High tf-idf scores indicate that a word is unique and distinctive to the dataset and should prompt further inquiry. Low tf-idf scores indicate that a word is common throughout the document. 
 
 ### Co-Occurance
 Co-occurrence gives us a sense of words that appear in the same text, but not necessarily next to each other. It shows words that are likely to co-occur. Note that this is different than topic modeling, which we'll discuss next week. 
