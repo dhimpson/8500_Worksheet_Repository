@@ -177,4 +177,22 @@ bwv.occupation <- function(Occupation) {
   return(result)
 }
 ## class notes March 9: Co-pilot
+## notes from class 4/6: text analysis 
+library(tidyverse)
+library(tidytext)
 
+## see slack for full notes of this
+tiny_corpus %>%
+ unnest_tokens(word, text)
+
+ tidy_corpus %>%
+ unnest_tokens(word, text) %>%
+ ##tokenize and turn into a matrix (might have missed a step here)
+ anti_join(stop_words) %>%
+ ## removes stopwords
+ count(doc_id, word, sort = TRUE)
+ bind_tf_idf(word, doc_id, n) %>%
+ arrange(desc(tf_idf))
+ ## arranges things by TD-IDF score so you can see things that are frequent and distinctive
+
+## pay attention to cooccurrance on ws
