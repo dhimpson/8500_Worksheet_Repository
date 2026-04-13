@@ -466,6 +466,40 @@ mb_combined <- mb %>%
   left_join(metadata, by = c("doc_id" = "Filename")) # by = c("doc_id" = "Filename") joins the cleaned doc_id with metadata's Filename column. left_join() keeps all rows from mb and adds matching columns from the metadata dataframe.
 
 head(mb_combined) ##checked my work
+
+tidy_mb <- mb_combined %>%
+  unnest_tokens(word, text) %>%
+  anti_join(stop_words) # here I am creating a new tidy dataset where I tokenize the text column into individual words (no lowercase, no punctuation) and then I removed stopwords from the data using anti_join and the tidyverse set of stopwords.
+View(tidy_mb) # used this to check my work
+
+#raw word count for progressive era (1895 to 1920)
+
+progressive_era_mb <- tidy_mb %>%
+  filter(Year >= 1895 & Year <= 1920) %>%
+  count(word, sort = TRUE)
+  View(progressive_era_mb) #I noticed that there are numeric numbers in the word count. The highest ranking raw "word" is currently 1. So I am going to remove the numbers because I really want to see the most used raw words.
+progressive_era_mb <- tidy_mb %>%
+  filter(Year >= 1895 & Year <= 1920) %>%
+  filter(!grepl("^[0-9]+$", word)) %>%  # removes words that are only numbers
+  count(word, sort = TRUE)
+View(progressive_era_mb)
+# this showed me only the top raw words. It is interesting that they include "physical", "training" and "digitized" within the top 5 raw word counts. These words remind me of the progressive era's focus on modernization and health.
+
+#Next I am going to get the tf_idf for the progressive era data.
+
+progressive_era_tfidf <- tidy_mb %>%
+  filter(Year >= 1895 & Year <= 1920) %>%
+  filter(!grepl("^[0-9]+$", word)) %>%  
+  count(doc_id, word, sort = TRUE) %>% 
+  bind_tf_idf(word, doc_id, n) # this built onto my previous code by giving me a word count per document and then calculated the tf-idf on the word counts grouped by document.
+progressive_era_tfidf %>%
+  arrange(desc(tf_idf)) #this gives the results sorted by tf-idf score.
+#After viewing I realize that there are many words with a zero idf score. These words are in every document in the dataset and I probably should have included them in the stop words list (most noteably "physical") I used copilot to filter them out of the results so I can more easily see the tf-idf scores.
+
+progressive_era_tfidf %>%
+  filter(idf > 0) %>%
+  arrange(desc(tf_idf))
+  #this did not work and I am not sure why.
 ```
 
 
