@@ -305,8 +305,7 @@ tidy_sotu %>%
 ```
 (@) The code above is commented to help you follow it. Walk through the code above, and explain what each line does in your own words. If its a function you are unfamiliar with, look up the documentation.
 
-> #### DORI START HERE AND CHECK WHAT YOU WROTE 
-tidy_sotu %>% ## take the tidy_sotu dataset and pass it to count()
+> tidy_sotu %>% ## take the tidy_sotu dataset and pass it to count()
   count(president, word)  %>%  ## This line provides a count for each word broken down by president. So, all the times that "senate" appears will be grouped by President (jefferson, lincoln etc.) It will then pass this info via the pipe operator to the next line.
 
   group_by(president) %>% ## groups all the info recieved by president. Passes the information on to the next line via pipe
