@@ -510,3 +510,25 @@ progressive_era_tfidf %>%
 
 Write a text analysis script that explores and asks questions of the texts. At the end write a summary that analyzes the results you found. Be sure to rely on your historical knowledge. What can we learn from applying the strategies you've learned in this worksheet to analyze these documents?
 
+```{r}
+download.file("https://github.com/regan008/8510-TextAnalysisData/blob/main/TheAmericanCity.zip?raw=true", "AmCity.zip")
+unzip("AmCity.zip")
+
+AmCitymetadata <- read.csv("https://raw.githubusercontent.com/regan008/8510-TextAnalysisData/main/AmCityMetadata.csv")
+#First I downloaded my .txt files and metadata files for the AmCity data.
+
+AmCity_data <- readtext(paste(getwd(), "/txt/*.txt", sep=""))
+# this loads all the .txt files into a subdirectory and all the results are stored in a variable called AmCity_data
+
+AmCity_combined <- AmCity_data %>%
+  mutate(doc_id = str_remove(doc_id, "^MB_")) %>%
+  left_join(AmCitymetadata, by = c("doc_id" = "filename"))
+# I took the AmCity_data and cleaned it up, removing the "MB" at the beginning of the doc_id listings. Then I joined it with the dataset by left_join. 
+
+tidy_AmCity <- AmCity_combined %>%
+  unnest_tokens(word, text) %>%
+  anti_join(stop_words) 
+#Created a new tidy dataset where I tokenize the text column into individual words (no lowercase, no punctuation) and then I removed stopwords from the data using anti_join and the tidyverse set of stopwords.
+
+
+```
