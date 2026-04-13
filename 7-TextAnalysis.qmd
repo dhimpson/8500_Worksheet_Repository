@@ -458,7 +458,15 @@ mb <- readtext(paste(getwd(), "/txt/*.txt", sep=""))
 ```
 
 (@) Add code chunks below and intersperse text to explain what you are doing and why.
+```{r}
+colnames(metadata)
+colnames(mb) ## Asked copilot how to check the column names in both dataframes to see if I could just join by a common column. Ran this code and realized that they do not match exactly. The metadata set has a Filename column while the mb set has a doc_id column. Then I looked at the actual files and realized that they need to be cleaned before I could do a left_join. The mb files have a "MB"identifier in front of the file name. If I take this off, I can then join the files with left_join.
+mb_combined <- mb %>%
+  mutate(doc_id = str_remove(doc_id, "^MB_")) %>%  # removes "MB_" from the start of the doc_id files(the ^ means beginnig of string)
+  left_join(metadata, by = c("doc_id" = "Filename")) # by = c("doc_id" = "Filename") joins the cleaned doc_id with metadata's Filename column. left_join() keeps all rows from mb and adds matching columns from the metadata dataframe.
 
+head(mb_combined) ##checked my work
+```
 
 
 
