@@ -530,5 +530,18 @@ tidy_AmCity <- AmCity_combined %>%
   anti_join(stop_words) 
 #Created a new tidy dataset where I tokenize the text column into individual words (no lowercase, no punctuation) and then I removed stopwords from the data using anti_join and the tidyverse set of stopwords.
 
+progressive_era_AmCity <- tidy_AmCity %>%
+  filter(year >= 1895 & year <= 1920) %>%
+  count(word, sort = TRUE)
+  head(progressive_era_AmCity)
+ 
 
+  #I decided to get a raw word count for the progressive era. I thought it may be interesting to see what the top words mentioned in this dataset were compared with the top raw word count from the Mind and Body journals for the same years. After running head()to see my top hits for raw word count, I notice that the same issue with the Mind Body data has occured where there are numerals in the word column. I filter to remove them so I can just see words only.
+
+progressive_era_AmCity <- tidy_AmCity %>%
+  filter(year >= 1895 & year <= 1920) %>%
+  filter(!grepl("^[0-9]+$", word)) %>%  # removes words that are only numbers
+  count(word, sort = TRUE)
+head(progressive_era_AmCity)
+# some overlap between the two journals occured. There is digitized and training in both as top raw word count hits. School is also listed in the top of the raw word count. This can lead me to assume that the progress era was interested in education, exerise, training of some sort, and technology.
 ```
