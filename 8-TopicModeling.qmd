@@ -1,7 +1,7 @@
 ---
 title: 'Worksheet 6: Topic Modeling'
-author: ''
-date: ''
+author: 'Dora Impson'
+date: 'April 13 - April 20'
 ---
 
 _This is the eigth in a series of worksheets for History 8500 at Clemson University. The goal of these worksheets is simple: practice, practice, practice. The worksheet introduces concepts and techniques and includes prompts for you to practice in this interactive document. When you are finished, you should change the author name (above), commit your changes, push to GitHub, and submit the link to your worksheet repository on Canvas. Don't forget to commit your changes as you go - you should make multiple commits as you work through the worksheet, not just one at the end. Also, remember to update your learning log in the `logs/` folder of your repository as you work through the assignment._
@@ -116,7 +116,15 @@ Note the `scales = free` option in facet_wrap. This lets each facet (topic) have
 
 (@) Can you adjust the code above to show the top 10 words from just one topic?
 ```{r}
+ac.top.terms <- ac.topics %>%
+  arrange(desc(beta)) %>% 
+  group_by(topic) %>% slice(1:10) 
 
+ac.top.terms %>%
+  mutate(term = reorder_within(term, beta, topic)) %>%
+  ggplot(aes(beta, term, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  scale_y_reordered()      
 ```
 
 Another useful way to look at the words in each topic is by visualizing them as a wordcloud.
@@ -129,11 +137,11 @@ wordcloud(topic1$term, topic1$beta, max.words = 100, random.order = FALSE,
 
 (@) Look at the topic words in each topic. Can you give each topic a descriptive label based on what it seems to be about? For example, if a topic has words like "street", "traffic", "paving", and "sidewalk," you might call it "Urban Infrastructure."
 
-Topic 1:
-Topic 2: 
-Topic 3:
-Topic 4:
-Topic 5:
+Topic 1: City Infrastructure
+Topic 2: New York City Infrastructure
+Topic 3: American City Infrastructure
+Topic 4:Public Utilities in Cities
+Topic 5:City Firestations
 
 Not all topics will be immediately interpretable and that is normal. Some might be ocr errors or gibberish rather than meaningful themes. 
 
