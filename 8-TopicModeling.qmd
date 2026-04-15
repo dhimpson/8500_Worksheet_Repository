@@ -118,7 +118,7 @@ Note the `scales = free` option in facet_wrap. This lets each facet (topic) have
 ```{r}
 ac.top.terms <- ac.topics %>%
   arrange(desc(beta)) %>% 
-  group_by(topic) %>% slice(1:10) 
+  group_by(topic) %>% slice(1:12) 
 
 ac.top.terms %>%
   mutate(term = reorder_within(term, beta, topic)) %>%
@@ -137,12 +137,12 @@ wordcloud(topic1$term, topic1$beta, max.words = 100, random.order = FALSE,
 
 (@) Look at the topic words in each topic. Can you give each topic a descriptive label based on what it seems to be about? For example, if a topic has words like "street", "traffic", "paving", and "sidewalk," you might call it "Urban Infrastructure."
 
-Topic 1: City Infrastructure
-Topic 2: New York City Infrastructure
-Topic 3: American City Infrastructure
+Topic 1: New York City Municipalities
+Topic 2: New York City Municipal Costs
+Topic 3: New York City Services
 Topic 4:Public Utilities in Cities
-Topic 5:City Firestations
-# I returned back to the original 5 topics. The words in each topic list are almost identical.
+Topic 5:New York City Firestations
+# I modified the number of words per topics to 12 so that I could find some differences between topics.
 
 Not all topics will be immediately interpretable and that is normal. Some might be ocr errors or gibberish rather than meaningful themes. 
 
