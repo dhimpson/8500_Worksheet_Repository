@@ -142,6 +142,7 @@ Topic 2: New York City Infrastructure
 Topic 3: American City Infrastructure
 Topic 4:Public Utilities in Cities
 Topic 5:City Firestations
+# I returned back to the original 5 topics. The words in each topic list are almost identical.
 
 Not all topics will be immediately interpretable and that is normal. Some might be ocr errors or gibberish rather than meaningful themes. 
 
