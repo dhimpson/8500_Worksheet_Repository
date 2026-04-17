@@ -192,26 +192,43 @@ Before you start coding, articulate what you want to explore:
 
 (@) What corpus did you choose and why?
 
->
+> I chose The Woman Citizen dataset mostly because I wanted to explore topics relating to women, sufferage, and civic engagement.
 
 (@) What historical question(s) could topic modeling help you explore with this corpus? (Examples: How did discourse change over time? What topics dominated during specific periods? Can we detect shifts related to major historical events?)
 
->
+>What were the key topics that were discussed leading up to the passage of the 19th Amendment? Did these topics shift the closer to the Amendment's passing? 
 
 ### Step 2: Build Your Topic Model
 
 ```{r}
-# Download and load your chosen corpus
-# Join with metadata
-# Tokenize and clean
+download.file("https://github.com/regan008/8510-TextAnalysisData/blob/main/TheWomanCitizen.zip?raw=true", "TheWomanCitizen.zip")
+unzip("TheWomanCitizen.zip")
 
+metadata <- read.csv("https://raw.githubusercontent.com/regan008/8510-TextAnalysisData/main/WomanCitizenMetadata.csv")
+# Downloaded the WomanCitizen corpus and its accompaning metadata files.
+TWCmeta <- as.data.frame(metadata)
+#created a dataframe from the metadata
+file_paths <- system.file("TheWomanCitizen/")
+twc_texts <- readtext(paste("TheWomanCitizen/", "*.txt", sep=""))
+twc_whole <- full_join(TWCmeta, twc_texts, by = c("filename" = "doc_id")) %>% as_tibble() 
+#joined TheWomanCitizen file to the metadata by the filename. 
+tidy_twc <- twc_whole %>%
+  unnest_tokens(word, text) %>% 
+  filter(str_detect(word, "[a-z']$")) %>% 
+  anti_join(stop_words)
+#tokenize datasest
 
+tidy_twc <- tidy_twc %>% filter(!grepl('[0-9]', word))
+#tidy the dataset
 ```
 
 ```{r}
 # Create your document-term matrix
-
-
+tidy_twc_words <- tidy_twc %>% count(filename, word)
+#First I created a document with words that could be counted. I am a little unsure about the reasoning behind this step.
+twc.dtm <- tidy_twc_words %>% 
+  cast_dtm(filename, word, n)
+#Next I used cast_dtm() to create a documnet-term matrix.
 ```
 
 ```{r}
