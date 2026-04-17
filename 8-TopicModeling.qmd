@@ -232,6 +232,11 @@ twc.dtm <- tidy_twc_words %>%
 ```
 
 ```{r}
+twc.lda <- LDA(twc.dtm, k = 10, control = list(seed = 12345))
+twc.lda
+
+
+
 # Experiment with different k values (number of topics)
 # Start with k = 10, then try 15, 20, 25, etc. Sometimes the "right" number of topics will be an odd number like 12.
 # What number gives you the most interpretable topics?
