@@ -331,14 +331,26 @@ wordcloud(topic1$term, topic1$beta, max.words = 50, random.order = FALSE,
 
 ```{r}
 # Join document-topic probabilities with metadata
-# Plot topics over time
+# First, get the document-topic probabilities (gamma values)
+twc.documents <- tidy(twc.lda, matrix = "gamma")
+head(twc.documents)
 
+# Join with metadata. 
+topics.by.year <- full_join(twc.documents, metadata, by = join_by(document == filename))
+
+# Plot topics over time
+topics.by.year$issue_date <- paste(topics.by.year$month, " ", topics.by.year$year, sep = "")
+
+ggplot(data=topics.by.year, aes(x=issue_date, y=gamma)) + 
+  geom_bar(stat="identity") + 
+  facet_wrap(~ topic, scales = "free") + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
 ```
 
 (@) What patterns do you see? Do certain topics appear more frequently in specific time periods? How does this align with what you know about the historical context?
 
->
+>I see that topics relating to the war effort and the passage of the 19th Amendment consistently remain high over time. This confirms what I know about the suffragist movement members who sought to portray themselves as model citizens worthy of getting the vote.
 
 ### Step 5: Historical Analysis
 
