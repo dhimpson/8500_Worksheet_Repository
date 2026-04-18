@@ -216,28 +216,46 @@ tidy_twc <- twc_whole %>%
   unnest_tokens(word, text) %>% 
   filter(str_detect(word, "[a-z']$")) %>% 
   anti_join(stop_words)
-#tokenize datasest
 
-tidy_twc <- tidy_twc %>% filter(!grepl('[0-9]', word))
+tidy_twc <- tidy_twc %>% 
+  filter(!grepl('[0-9]', word)) %>%
+  filter(str_detect(word, "^[a-z']+$")) %>%
+  # ensures that words only containing lowercase letters and apostrophes from start to end.
+  filter(!word %in% c("a'noted","ing"))  # exclude this term which was dominating my results and most likely is an abbreviation of "annotated".
+   
 #tidy the dataset
 ```
 
 ```{r}
 # Create your document-term matrix
 tidy_twc_words <- tidy_twc %>% count(filename, word)
-#First I created a document with words that could be counted. I am a little unsure about the reasoning behind this step.
+#First I created a document with words that could be counted. 
 twc.dtm <- tidy_twc_words %>% 
   cast_dtm(filename, word, n)
-#Next I used cast_dtm() to create a documnet-term matrix.
+#Next I used cast_dtm() to create a document-term matrix.
 ```
 
 ```{r}
-twc.lda <- LDA(twc.dtm, k = 10, control = list(seed = 12345))
+twc.lda <- LDA(twc.dtm, k = 22, control = list(seed = 12345))
 twc.lda
 
+twc.topics <- tidy(twc.lda, matrix = "beta")
+head(twc.topics)
+
+twc.top.terms <- twc.topics %>%
+  arrange(desc(beta)) %>% 
+  group_by(topic) %>% slice(1:5)
+
+twc.top.terms %>%
+  mutate(term = reorder_within(term, beta, topic)) %>%
+  ggplot(aes(beta, term, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free") +
+  scale_y_reordered()
 
 
-# Experiment with different k values (number of topics)
+
+# I experimented with different k values (number of topics) and also added terms to the filter()as needed. 
 # Start with k = 10, then try 15, 20, 25, etc. Sometimes the "right" number of topics will be an odd number like 12.
 # What number gives you the most interpretable topics?
 
@@ -246,34 +264,68 @@ twc.lda
 
 (@) How many topics did you settle on? Why did you choose this number?
 
->
+> #I think 22 gives me the most interpretable topics. 15 was too few and more than 22 seemed to be too many. 
 
 ### Step 3: Interpret Your Topics
 
 ```{r}
 # Generate top terms for each topic
-
-
+twc.top.terms <- twc.topics %>%
+  arrange(desc(beta)) %>% 
+  group_by(topic) %>% 
+  slice(1:10)  # top 10 terms per topic
+  head(twc.top.terms)
+# Here are the top terms:
+#1     1 women    0.0356 
+#2     1 woman    0.0124 
+#3     1 citizen  0.0112 
+#4     1 suffrage 0.0103 
+#5     1 country  0.00596
+#6     1 ing      0.00485
+#I notice that "ing" is listed in the top terms. I decide to filter this out and try again. I also consider filtering "woman" and "citizen" out since they are the title of the publication.I decided to leave woman/women and citizen in the data because I am worried that I will miss something concerning the topics of the sufferagist movement if I remove them via stopwords/filter.
+# Here are the new top terms after I tidied more: 
+#1     1 war        0.0153 
+#2     1 suffrage   0.0106 
+#3     1 york       0.00827
+#4     1 government 0.00795
+#5     1 committee  0.00784
+#6     1 national   0.00674
 ```
 
 ```{r}
 # Visualize top terms
-
-
+twc.top.terms %>%
+  mutate(term = reorder_within(term, beta, topic)) %>%
+  ggplot(aes(beta, term, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free") +
+  scale_y_reordered()
+#Code above provided a bar chart for each topic. Code below provided a word cloud for topic one only.
+library(wordcloud)
+topic1 <- twc.topics %>% filter(topic == 1)
+wordcloud(topic1$term, topic1$beta, max.words = 50, random.order = FALSE,
+    rot.per = 0.3, colors = brewer.pal(6, "Dark2"))
 ```
 
 (@) Label each of your topics based on the top words. What does each topic seem to be about?
 
-| Topic Number | Label/Description | Top 5 Words |
-|--------------|-------------------|-------------|
-| 1            |                   |             |
-| 2            |                   |             |
-| 3            |                   |             |
-| ...          |                   |             |
+| Topic Number - Label/Description -Top 5 Words |
+
+# 1 - Suffergist Committee Wartime Work - War, Suffrage, York, government, committee 
+# 2 - Voting Engagement - women, sufferage, woman, vote, country
+# 3 - Women's engagment on the Homefront- women, war, woman, home, time
+# 4- Work on Ammendment Passage- sufferage, woman, york, national, political
+# 5 - Legislative Action in Congress - women, woman, citizen, war, home
+# 6 - City Suffergist Meeting - woman, women, suffrage, citizen, county
+# 7 - Prohibition - women, war, prohibition, party, time
+
+## I chose to just type of the top 7 topics instead of 22. 
+
+
 
 (@) Are there any topics that don't make sense or seem to mix unrelated concepts? This is normal - not every topic will be interpretable.
 
->
+> Most of the topics made sense. I think this was due to the multiple tweaks to the filter that I made. 
 
 ### Step 4: Analyze Topics Over Time
 
