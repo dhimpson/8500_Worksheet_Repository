@@ -165,7 +165,17 @@ ggplot() +
 
 (@) Create a map that uses your geocoded data from the Boston Women Voters dataset. 
 ```{r}
+MA <- map_data("state", region = "Massachusetts")
 
+ggplot() + 
+  geom_map(data = MA, map = MA, aes(long, lat, map_id=region), fill = "lightgray", color = "black") +
+  geom_point(data = test_coords %>% filter(state == "MA"), 
+             mapping = aes(x = longitude, y = latitude), color = "blue", size = 3) + 
+  coord_fixed(1.3) +
+  labs(title = "Boston Women Voters",
+       x = "Longitude",
+       y = "Latitude")
+# this returns a blank map...work on this.
 ```
 
 Lets return to the recreational data for a minute.
