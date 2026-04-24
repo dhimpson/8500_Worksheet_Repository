@@ -339,5 +339,21 @@ ggplot(parks, aes(x = country)) +
 ```
 
 
+```{r}
+colnames(parks)
+#noting that the columns I need are called "lat", "lon", and "park"
 
+#attempt below is of a static map using ggplot
+world <- map_data("world")
 
+ggplot() + 
+  geom_map(data = world, map = world, aes(long, lat, map_id = region), 
+           fill = "lightgray", color = "black") +
+  geom_point(data = parks, mapping = aes(x = lon, y = lat), 
+             color = "red", size = 2, alpha = 0.6) +
+  labs(title = "National Parks Around the World",
+       x = "Longitude",
+       y = "Latitude") +
+  coord_fixed(1.3)
+#this provided a world map with many overlapping points.
+```
