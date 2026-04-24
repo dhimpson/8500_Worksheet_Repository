@@ -309,12 +309,13 @@ leaflet(data=rec.data.coordinates) %>% addTiles() %>% addMarkers(~longitude, ~la
 
 (@) Use leaflet to map a dataset of your choice: 
 ```{r}
-
+leaflet(data=test_coords) %>% addTiles() %>%
+addMarkers(~longitude, ~latitude, popup = paste("The locations of sample voters in MA"))
 ```
 
 (@) Explain what choices you made in building this map? Why might you use leaflet over ggplot? When would ggplot be more desirable? 
 
->
+> I kept things simple because my data was only a slice of the Boston Womens Voter data. Since the locations share a city and state, the popups were rather simplistic. I could see the value in using leaflet over ggplot when dealing with multiple locations across one city or state. It allows for a more interactive experience then the ggplot static maps.
 
 
 ### Exercises
