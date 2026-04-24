@@ -324,4 +324,20 @@ For the next portion of this worksheet you will use some data about national par
 ```{r}
 parks <- read.csv("https://raw.githubusercontent.com/regan008/DigitalMethodsData/main/raw/parks-geocoded.csv")
 ```
+```{r}
+#first tried to see the documentation for this dataset in a hope to gain a better understanding of her project.?parks did not yield documentation. I decided to begin by creating a bar chart to visualize park by country.
+
+unique(parks$country)  # This allowed me to see what countries are in the dataset
+
+ggplot(parks, aes(x = country)) +
+  geom_bar(fill = "steelblue", color = "black") +
+  labs(title = "Number of National Parks by Country",
+       x = "Country",
+       y = "Count")+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) #this last bit adjusts the text along the x axis to a slant for better readability.
+#This shows me that Canada, Finland, Italy, Norway, Ukraine, and the United States all have more than 40 national parks.
+```
+
+
+
 
