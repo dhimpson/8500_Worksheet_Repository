@@ -356,3 +356,24 @@ ggplot() +
        y = "Latitude") +
   coord_fixed(1.3)
 ```
+#Now I want to see if I can map just the countries with more than 40 national parks. I would like to create a map in leaflet that shows these parks.
+```{r}
+# First, identify which countries have more than 40 parks
+countries_with_many_parks <- parks %>%
+  group_by(country) %>%
+  summarize(park_count = n()) %>%
+  filter(park_count > 40) %>%
+  pull(country)
+
+# ^this yielded this data set: c("Canada", "Finland", "Norway", "Ukraine", "United States")
+
+# next: Filter the parks data to only include those countries.
+parks_filtered <- parks %>%
+  filter(country %in% countries_with_many_parks)
+
+# Map to leaflet
+leaflet(data = parks_filtered) %>% 
+  addTiles() %>%
+  addMarkers(~lon, ~lat, 
+             popup = paste("Park: ", parks_filtered$park, "<br>Country: ", parks_filtered$country, sep=""))
+```
