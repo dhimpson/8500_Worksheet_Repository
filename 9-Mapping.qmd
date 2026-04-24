@@ -13,11 +13,13 @@ There are many different mapping packages for R. That means there is no single w
 ```{r message=FALSE, warning=FALSE}
 library(ggplot2) 
 library(tidyverse)
-library(DigitalMethodsData)
-install.packages("ggmap")
-install.packages("tidygeocoder")
 library(ggmap)
 library(tidygeocoder)
+
+# Install DigitalMethodsData from GitHub
+if (!require("devtools")) install.packages("devtools")
+devtools::install_github("regan008/DigitalMethodsData")
+library(DigitalMethodsData)
 ```
 
 ### Geocoding
@@ -39,17 +41,16 @@ Now we have latitude and longitude coordinates for our data.
 
 (@) Use this approach to geocode the `UndergroundRR` data.  #this is listed as "undergroundRR" in the DigitalMethodsData
 ```{r}
-
+#I ran this code fine on Tueday, but by Friday it will not run. I had a issue with the digital methods data and could not get it to load due to the CRAN not accepting my version of R (4.5.2: 15015). I used the agent mode to troubleshoot this and it suggested to pull the digital methods data straight from your github page and reload the package that way since my R version is up to date. It looks like undergroundRR is not in the dataset that I pulled from github.
 library(DigitalMethodsData)
-?DigitalMethodsData
-View(undergroundRR)
-undergroundRR.data.coordinates <- undergroundRR %>% geocode(city = City, state = State, method='osm', lat = latitude, long = longitude)
+data(package = "DigitalMethodsData")
+data("undergroundRR")
 ```
 
 
 (@) Geocode the Boston Women Voters dataset. Note that the data does include street addresses but because they are broken into parts - street address number, street, etc - you'll need to combine them into a full address to pass to the geocoding function. 
 ```{r}
-data("BostonWomenVoters")
+
 View(BostonWomenVoters)
 data("BostonWomenVoters")
 
@@ -169,13 +170,13 @@ MA <- map_data("state", region = "Massachusetts")
 
 ggplot() + 
   geom_map(data = MA, map = MA, aes(long, lat, map_id=region), fill = "lightgray", color = "black") +
-  geom_point(data = test_coords %>% filter(state == "MA"), 
+  geom_point(data = test_coords %>% filter(state == "Massachusetts"), 
              mapping = aes(x = longitude, y = latitude), color = "blue", size = 3) + 
   coord_fixed(1.3) +
   labs(title = "Boston Women Voters",
        x = "Longitude",
        y = "Latitude")
-# this returns a blank map...work on this.
+# this returns a blank map...work on this.Asked for help from claude "why does my map return blank without points" and was told that the issue seems to be my filter code. The state needs to be Massachusetts, not MA. This solution worked well.
 ```
 
 Lets return to the recreational data for a minute.
@@ -203,7 +204,9 @@ ggplot() +
 
 ```{r}
 library(readr) #you may have to install it using `install.packages()`. 
+install.packages("sf")
 library(sf)
+install.packages("ipumsr")
 library(ipumsr) #you may need to install this. If you are on a mac, it may give you warnings. Try loading it to verify installation worked. 
 library(tidyverse)
 
@@ -224,13 +227,13 @@ nhgis_shp_file <- "data/nhgis_simplified_shape.zip"
 nhgis_shp <- read_ipums_sf(
   shape_file = nhgis_shp_file
 )
-nhgis_data <- read_nhgis(nhgis_csv_file)
+nhgis_data <- read_ipums_agg(nhgis_csv_file)
 
 #Use the ipums join file to join both the data and shape file together.
 nhgis <- ipums_shape_full_join(nhgis_data, nhgis_shp, by = "GISJOIN")
 
 #filter nhgis so that the map focuses on the 48 contiguous states. 
-nhgis <- nhgis %>% filter(STATE != "Alaska Territory" & STATENAM != "Hawaii Territory")
+#nhgis <- nhgis %>% filter(STATE != "Alaska Territory" & STATENAM != "Hawaii Territory")
 
 #plot 
 ggplot(data = nhgis, aes(fill = AZF001)) +
@@ -238,7 +241,7 @@ ggplot(data = nhgis, aes(fill = AZF001)) +
 
 ```
 (@) In the code above, why filter out Hawaii and Alaska? Try commenting out that line and rerunning the code. What happens? Why might we want to do this? Why might we not want to do this? How does it shape the interpretation?
->
+> Filtering out Hawaii and Alaska should be dependent upon whatever historical question that I am asking of the data. Having the two noncontiguous states included in the map makes the presentation look more cluttered (maybe because my screen is small). The decision to include them or not should be based upon my historical question.
 
 This is a great start. But using AZF001 (Native born males) as the fill does not create a useful visualization. It doesn't give us a sense of the proportion of that data. There are multiple problems with the map as it is, but one is that the color scale makes this incredibly hard to read. We can fix that by using a scale to break the values of AZF001 into bins and assign each a color. R has a function for this. It comes from the scales pacakge which you may need to install.
 
@@ -252,23 +255,30 @@ This is now much more readable but the numbers represented are simply the raw po
 
 (@) First, create a variable called total_male_pop, with the total foreign and native born male population by summing the variables AZF001 and AZF003. 
 ```{r}
-
+nhgis <- nhgis %>% 
+  mutate(total_male_pop = AZF001 + AZF003)
+  #this created a new column in the nhgis data for total male population and added these two populations together
 ```
 
 (@) Now, use the total_male_pop variable and create a variable for the the percentage of foreign born males.
 ```{r}
-
+nhgis <- nhgis %>% 
+  mutate(pct_foreign_born_males = AZF003 / total_male_pop)
+  #this used mutate to divide the foriegn born males by the total male population 
 ```
 
 (@) Now map your result. You'll want to replicate the code from the example above, but this time add another layer to the plot - a scale. Here we'll use this scale `scale_fill_continuous("", labels = scales::percent)`
 
 Before you write that code, look up the documentation for the above code (and look at the examples). What does it do? 
 
->
+> This code creates a continuous color gradient for filling areas in a plot. 
+
 
 Now create the map: 
 ```{r}
-
+ggplot(data = nhgis, aes(fill = pct_foreign_born_males)) +
+  geom_sf() + 
+  scale_fill_continuous(name = "Percentage Foreign Born Males", labels = scales::percent)
 ```
 
 ### Leaflet
@@ -277,6 +287,7 @@ In recent years Leaflet has become the most popular open source Javascript libra
 
 Like `ggplot()` it works by layering information on top of a basemap. You begin by loading the library and invoking leaflet. 
 ```{r}
+install.packages("leaflet")
 library(leaflet)
 my.map <- leaflet()
 my.map
