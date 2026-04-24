@@ -1,7 +1,7 @@
 ---
 title: "Worksheet 7: Mapping"
-author: ""
-date: ""
+author: "Dori Impson"
+date: "4-20-2026 to 4-29-2026"
 ---
 
 _This is the seventh in a series of worksheets for History 8500 at Clemson University. The goal of these worksheets is simple: practice, practice, practice. The worksheet introduces concepts and techniques and includes prompts for you to practice in this interactive document. When you are finished, you should change the author name (above), render your document to a pdf, and upload it to canvas. Don't forget to commit your changes as you go and push to github when you finish the worksheet._
@@ -325,7 +325,7 @@ For the next portion of this worksheet you will use some data about national par
 parks <- read.csv("https://raw.githubusercontent.com/regan008/DigitalMethodsData/main/raw/parks-geocoded.csv")
 ```
 ```{r}
-#first tried to see the documentation for this dataset in a hope to gain a better understanding of her project.?parks did not yield documentation. I decided to begin by creating a bar chart to visualize park by country.
+#FYI- I did not see an email come through about Dr. Barczewsk's project. I tried to see the documentation for this dataset in a hope to gain a better understanding of her project.?parks did not yield documentation. I decided to begin by creating a bar chart to visualize park by country.
 
 unique(parks$country)  # This allowed me to see what countries are in the dataset
 
@@ -377,3 +377,5 @@ leaflet(data = parks_filtered) %>%
   addMarkers(~lon, ~lat, 
              popup = paste("Park: ", parks_filtered$park, "<br>Country: ", parks_filtered$country, sep=""))
 ```
+
+# I am not quite sure what argument Dr. Barczewsk is making with her data, but a few ways that this data could be used further would be to map the addition of parks over time throughout the world. I would look at this information in light of the rise and fall of nations or empires (ie. The British Empire or the fall of the USSR)? It might be also interesting to add population data for the nearest cities into the dataset and examine if these parks tended to be built near cities of sizable populations? Were the parks constructed as an escape from city life or to preserve the natural enviroment? 
